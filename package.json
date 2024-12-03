@@ -1,0 +1,36 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "test": "jest --verbose --runInBand",
+    "build": "webpack",
+    "start": "fastify start server/plugin.js -l debug -P -o"
+  },
+  "dependencies": {
+    "@fastify/formbody": "^7.0.1",
+    "@fastify/passport": "^2.3.0",
+    "@fastify/secure-session": "^5.2.0",
+    "@fastify/sensible": "^5.1.0",
+    "@fastify/static": "^6.5.0",
+    "@fastify/view": "^7.1.0",
+    "bootstrap": "^5.3.3",
+    "fastify": "^4.10.2",
+    "fastify-cli": "^5.1.0",
+    "fastify-method-override": "^1.5.10",
+    "fastify-objectionjs": "^1.0.0",
+    "fastify-reverse-routes": "^3.0.0",
+    "i18next": "^24.0.2",
+    "mini-css-extract-plugin": "^2.9.2",
+    "objection-unique": "^1.2.2",
+    "pug": "^3.0.3",
+    "qs": "^6.13.1",
+    "sqlite3": "^5.0.11",
+    "webpack": "^5.96.1"
+  },
+  "devDependencies": {
+    "css-loader": "^6.7.1",
+    "webpack-cli": "^5.1.4"
+  }
+}
