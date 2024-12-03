@@ -2,6 +2,7 @@
   "name": "@hexlet/code",
   "version": "1.0.0",
   "type": "module",
+  "main": "server/plugin.js",
   "scripts": {
     "prebuild": "rm -rf dist",
     "test": "jest --verbose --runInBand",
