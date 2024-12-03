@@ -1,8 +1,6 @@
 import { fileURLToPath } from 'url';
 import path from 'path';
 import fastifyStatic from '@fastify/static';
-// NOTE: не поддердивает fastify 4.x
-// import fastifyErrorPage from 'fastify-error-page';
 import fastifyView from '@fastify/view';
 import fastifyFormbody from '@fastify/formbody';
 import fastifySecureSession from '@fastify/secure-session';
@@ -79,7 +77,6 @@ const addHooks = (app) => {
 
 const registerPlugins = async (app) => {
   await app.register(fastifySensible);
-  // await app.register(fastifyErrorPage);
   await app.register(fastifyReverseRoutes);
   await app.register(fastifyFormbody, { parser: qs.parse });
   await app.register(fastifySecureSession, {
@@ -103,7 +100,6 @@ const registerPlugins = async (app) => {
       failureRedirect: app.reverse('root'),
       failureFlash: i18next.t('flash.authError'),
     },
-  // @ts-ignore
   )(...args));
 
   await app.register(fastifyMethodOverride);

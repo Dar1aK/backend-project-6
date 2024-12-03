@@ -5,7 +5,7 @@
   "main": "server/plugin.js",
   "scripts": {
     "prebuild": "rm -rf dist",
-    "test": "jest --verbose --runInBand",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --verbose --runInBand",
     "build": "webpack",
     "start": "fastify start server/plugin.js -l debug -P -o"
   },
@@ -32,7 +32,13 @@
     "webpack": "^5.96.1"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.24.6",
+    "@jest/globals": "^29.7.0",
     "css-loader": "^6.7.1",
     "webpack-cli": "^5.1.4"
+  },
+  "jest": {
+    "setupFiles": ["dotenv/config"],
+    "modulePathIgnorePatterns": ["<rootDir>/__tests__/helpers/"]
   }
 }
