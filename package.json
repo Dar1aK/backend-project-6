@@ -22,6 +22,7 @@
     "fastify-method-override": "^1.5.10",
     "fastify-objectionjs": "^1.0.0",
     "fastify-reverse-routes": "^3.0.0",
+    "heroku": "^9.5.0",
     "i18next": "^24.0.2",
     "mini-css-extract-plugin": "^2.9.2",
     "objection-unique": "^1.2.2",
