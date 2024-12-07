@@ -1,6 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
-import 'dotenv/config'
+import 'dotenv/config.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
