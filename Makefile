@@ -10,7 +10,7 @@ build:
 	npm run build
 
 prepare:
-	cp -n .env || true
+	cp -n .env.example .env || true
 
 start:
 	heroku local -f ./Procfile.dev

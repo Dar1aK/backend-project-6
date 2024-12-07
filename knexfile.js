@@ -27,12 +27,8 @@ export const test = {
   migrations,
 };
 
-console.log('process.env***', process.env)
-
 export const production = {
   client: 'pg',
-  // connection: process.env.DB_URL,
-  // searchPath: ['knex', 'public'],
   connection: {
     connectionString: process.env.DB_URL,
     host: process.env.DB_HOST,
