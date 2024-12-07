@@ -33,6 +33,7 @@ export default {
           signIn: 'Вход',
           signUp: 'Регистрация',
           signOut: 'Выход',
+          statuses: 'Статусы',
         },
       },
       views: {
@@ -64,6 +65,11 @@ export default {
             more: 'Узнать Больше',
           },
         },
+        statuses: {
+          id: 'ID',
+          name: 'Имя',
+          createdAt: 'Дата создания',
+        }
       },
     },
   };

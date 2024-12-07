@@ -21,6 +21,8 @@ html(lang="en")
           ul.navbar-nav
             if isAuthenticated()
               li.nav-item
+                a.nav-link(href=route('statuses'))= t('layouts.application.statuses')
+              li.nav-item
                 +buttonTo(route('session'), 'delete')(class="btn nav-link" value=t('layouts.application.signOut'))
             else
               li.nav-item

@@ -33,6 +33,7 @@ export default {
           signIn: 'Login',
           signUp: 'Register',
           signOut: 'Logout',
+          statuses: 'Statuses',
         },
       },
       views: {
@@ -64,6 +65,11 @@ export default {
             more: 'Learn more',
           },
         },
+        statuses: {
+          id: 'ID',
+          name: 'Name',
+          createdAt: 'Created at',
+        }
       },
     },
   };

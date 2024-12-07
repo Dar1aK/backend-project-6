@@ -1,0 +1,14 @@
+extends ../layouts/application.pug
+
+block content
+  table.table.table-striped
+    thead
+      tr
+        th= t('views.statuses.id')
+        th= t('views.statuses.name')
+        th= t('views.statuses.createdAt')
+    tbody
+      //- each status in statuses
+      //-   tr
+      //-     td= status.id
+      //-     td= status.name
