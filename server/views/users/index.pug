@@ -7,9 +7,14 @@ block content
         th= t('views.users.id')
         th= t('views.users.email')
         th= t('views.users.createdAt')
+        th= t('views.users.actions')
     tbody
       each user in users
         tr
           td= user.id
           td= user.email
           td= formatDate(user.createdAt)
+          td
+            .d-flex.flex-wrap
+              a.btn.btn-primary.me-1(href=`/users/${user.id}/edit`)= t('views.users.edit')
+              +buttonTo(`users/${user.id}`, 'delete')(class="btn btn-danger" value=t('views.users.delete'))
