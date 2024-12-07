@@ -68,6 +68,38 @@ describe('test users CRUD', () => {
     expect(user).toMatchObject(expected);
   });
 
+  it('edit', async () => {
+    const params = testData.users.existing;
+    const response = await app.inject({
+      method: 'PATCH',
+      url: '/users/1',
+      payload: {
+        data: params,
+      },
+    });
+
+    expect(response.statusCode).toBe(302);
+    const expected = {
+      ..._.omit(params, 'password'),
+      passwordDigest: encrypt(params.password),
+    };
+    const user = await models.user.query().findOne({ email: params.email });
+    expect(user).toMatchObject(expected);
+  });
+
+  it('delete', async () => {
+    const params = testData.users.existing;
+    const response = await app.inject({
+      method: 'DELETE',
+      url: '/users/1',
+      payload: {
+        data: params,
+      },
+    });
+
+    expect(response.statusCode).toBe(302);
+  });
+
   afterEach(async () => {
     // Пока Segmentation fault: 11
     // после каждого теста откатываем миграции

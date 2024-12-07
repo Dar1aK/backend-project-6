@@ -9,6 +9,7 @@ export default (app) => {
     })
     .get('/users/:id/edit', { name: 'editUser' }, async (req, reply) => {
       const { id } = req.params;
+      console.log('REQ', req, "***", req.user)
       const currentUserId = req?.user?.getUserId(req.user)
       if (currentUserId == id) {
         const user = await app.objection.models.user.query().findById(id);
