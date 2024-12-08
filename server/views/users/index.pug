@@ -1,5 +1,9 @@
 extends ../layouts/application.pug
 
+block header
+  .d-flex.flex-column
+    = t('views.users.title')
+
 block content
   table.table.table-striped
     thead

@@ -1,5 +1,10 @@
 extends ../layouts/application.pug
 
+block header
+  .d-flex.flex-column
+    = t('views.statuses.title')
+    a.btn.btn-primary.align-self-start.mt-3(href=route('newStatus'))= t('views.statuses.create')
+
 block content
   table.table.table-striped
     thead
@@ -7,8 +12,14 @@ block content
         th= t('views.statuses.id')
         th= t('views.statuses.name')
         th= t('views.statuses.createdAt')
+        th= t('views.statuses.actions')
     tbody
-      //- each status in statuses
-      //-   tr
-      //-     td= status.id
-      //-     td= status.name
+      each status in statuses
+        tr
+          td= status.id
+          td= status.name
+          td= formatDate(status.createdAt)
+          td
+            .d-flex.flex-wrap
+              a.btn.btn-primary.me-1(href=`/statuses/${status.id}/edit`)= t('views.statuses.edit')
+              +buttonTo(`statuses/${status.id}`, 'delete')(class="btn btn-danger" value=t('views.statuses.delete'))

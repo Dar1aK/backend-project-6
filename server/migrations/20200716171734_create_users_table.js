@@ -7,7 +7,7 @@ export const up = (knex) => {
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
     }),
-    knex.schema.createTable('taskStatuses', (table) => {
+    knex.schema.createTable('task_statuses', (table) => {
       table.increments('id').primary();
       table.string('name');
       table.timestamp('created_at').defaultTo(knex.fn.now());
@@ -19,6 +19,6 @@ export const up = (knex) => {
 export const down = (knex) => {
   return Promise.all([
     knex.schema.dropTable('users'),
-    knex.schema.dropTable('taskStatuses')
+    knex.schema.dropTable('task_statuses')
   ])
 };
