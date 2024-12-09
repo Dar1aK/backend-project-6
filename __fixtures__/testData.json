@@ -8,5 +8,13 @@
       "email": "lawrence.kulas87@outlook.com",
       "password": "O6AvLIQL1cbzrre"
     }
+  },
+  "task_statuses": {
+    "new": {
+      "name": "123"
+    },
+    "existing": {
+      "name": "111"
+    }
   }
 }
