@@ -1,0 +1,48 @@
+extends ../layouts/application.pug
+
+block header
+  .d-flex.flex-column
+    = t('views.tasks.title')
+    a.btn.btn-primary.align-self-start.mt-3(href=route('newTask'))= t('views.tasks.create')
+
+block content
+  .card.shadow-sm
+    .card-body.p-4
+      .row
+        .col-12.col-md
+          .input-group.mb-3
+            label.input-group-text(for="data_status")= t('views.tasks.status')
+            select.form-select#data_status(name="status")
+              option
+              each status in statuses
+                option(value=status.id)= status.name
+        .col-12.col-md
+          .input-group.mb-3
+            label.input-group-text(for="data_executor")= t('views.tasks.user')
+            select.form-select#data_executor(name="executor")
+              option
+              each user in users
+                option(value=user.id)= user.email
+        .col-12.col-md
+          .input-group.mb-3
+            label.input-group-text(for="data_label")= t('views.tasks.label')
+            select.form-select#data_label(name="label")
+              option
+
+  table.table.table-striped
+    thead
+      tr
+        th= t('views.tasks.id')
+        th= t('views.tasks.name')
+        th= t('views.tasks.createdAt')
+        th= t('views.tasks.actions')
+    tbody
+      each task in tasks
+        tr
+          td= task.id
+          td= task.name
+          td= formatDate(task.createdAt)
+          td
+            .d-flex.flex-wrap
+              //- a.btn.btn-primary.me-1(href=`/statuses/${status.id}/edit`)= t('views.statuses.edit')
+              //- +buttonTo(`statuses/${status.id}`, 'delete')(class="btn btn-danger" value=t('views.statuses.delete'))

@@ -17,4 +17,17 @@ module.exports = class TaskStatus extends unique(BaseModel) {
       },
     };
   }
+
+  // static get relationMappings() {
+  //   return {
+  //     movies: {
+  //       relation: BaseModel.OneToManyRelation,
+  //       modelClass: 'Task',
+  //       join: {
+  //         from: 'status.id',
+  //         to: 'task.statusId'
+  //       }
+  //     }
+  //   }
+  // }
 }

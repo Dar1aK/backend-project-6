@@ -1,0 +1,13 @@
+extends ../layouts/application.pug
+
+block header
+  = t('views.statuses.new.title')
+
+block content
+  +formFor()(action=route('tasks') method='post')
+    +input(status, 'name', errors)(type="text")
+    +textarea(status, 'description', error)
+    +select(status, 'status', statuses, error)
+    +select(status, 'user', users, error)
+    +input(status, 'label', errors)(type="text")
+    +submit(status)(value=t('views.statuses.new.submit'))
