@@ -121,7 +121,8 @@ export default {
         actions: 'Actions',
         title: 'Tasks',
         status: 'Status',
-        user: 'User',
+        creatorId: 'Author',
+        executorId: 'Executor',
         label: 'Label',
         new: {
           title: 'Creating task',
@@ -130,9 +131,10 @@ export default {
         edit: {
           title: 'Edit task',
         },
-        submit: 'Save',
+        submit: 'Show',
         edit: 'Edit',
         delete: 'Delete',
+        myOnly: 'Only my tasks',
       }
     },
   },

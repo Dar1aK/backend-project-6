@@ -11,7 +11,7 @@ module.exports = class Task extends unique(BaseModel) {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['name', 'statusId', 'creatorId'],
+      required: ['name', 'statusId', 'executorId'],
       properties: {
         id: { type: 'integer' },
         name: { type: 'string', minLength: 1 },

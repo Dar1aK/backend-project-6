@@ -1,0 +1,25 @@
+extends ../layouts/application.pug
+
+block header
+  .d-flex.flex-column
+    = task.name
+
+block content
+  .row.mt-5.p-5.shadow.bg-white
+    .col-12.col-md-8.order-2.order-md-1
+      .lead.fw-normal.mb-4= task.description
+    .col-12.col-md-4.border-start.px-3.order-1.order-md-2.mb-3.mb-md-0
+      .mb-2
+        span.me-1.badge.bg-danger.text-white= task.name
+      .d-flex.flex-wrap.mb-3
+        span.text-muted.me-2= 'name'
+        span= 'text'
+      .d-flex.flex-wrap.mb-3
+        span.text-muted.me-2= 'name'
+        span= 'text'
+      .d-flex.flex-wrap.mb-3
+        span.text-muted.me-2= 'name'
+        span= 'text'
+      //- .d-flex.flex-wrap
+      //-   a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`)= t('views.tasks.edit')
+      //-   +buttonTo(`tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.delete'))

@@ -6,43 +6,55 @@ block header
     a.btn.btn-primary.align-self-start.mt-3(href=route('newTask'))= t('views.tasks.create')
 
 block content
-  .card.shadow-sm
-    .card-body.p-4
-      .row
-        .col-12.col-md
-          .input-group.mb-3
-            label.input-group-text(for="data_status")= t('views.tasks.status')
-            select.form-select#data_status(name="status")
-              option
-              each status in statuses
-                option(value=status.id)= status.name
-        .col-12.col-md
-          .input-group.mb-3
-            label.input-group-text(for="data_executor")= t('views.tasks.user')
-            select.form-select#data_executor(name="executor")
-              option
-              each user in users
-                option(value=user.id)= user.email
-        .col-12.col-md
-          .input-group.mb-3
-            label.input-group-text(for="data_label")= t('views.tasks.label')
-            select.form-select#data_label(name="label")
-              option
+  +formFor()(action='/tasks' method='get')
+    .card.shadow-sm
+      .card-body.p-4
+        .row
+          .col-12.col-md
+            .input-group.mb-3
+              label.input-group-text(for="data_status")= t('views.tasks.status')
+              select.form-select#data_status(name="status")
+                option
+                each status in statuses
+                  option(value=status.id)= status.name
+          .col-12.col-md
+            .input-group.mb-3
+              label.input-group-text(for="data_executor")= t('views.tasks.executorId')
+              select.form-select#data_executor(name="executor")
+                option
+                each user in users
+                  option(value=user.id)= user.email
+          .col-12.col-md
+            .input-group.mb-3
+              label.input-group-text(for="data_label")= t('views.tasks.label')
+              select.form-select#data_label(name="label")
+                option
+        .mb-3.form-check
+          input.form-check-input(id="data_isCreatorUser", type="checkbox", name="isCreatorUser")
+          label.form-check-label(for="data_isCreatorUser")= t('views.tasks.myOnly')
+        +submit(user)(value=t('views.tasks.submit'))
 
   table.table.table-striped
     thead
       tr
         th= t('views.tasks.id')
         th= t('views.tasks.name')
+        th= t('views.tasks.status')
+        th= t('views.tasks.creatorId')
+        th= t('views.tasks.executorId')
         th= t('views.tasks.createdAt')
         th= t('views.tasks.actions')
     tbody
       each task in tasks
         tr
           td= task.id
-          td= task.name
+          td
+            a(href=`/tasks/${task.id}`)= task.name
+          td= task.status
+          td= task.creatorId
+          td= task.executorId
           td= formatDate(task.createdAt)
           td
             .d-flex.flex-wrap
-              //- a.btn.btn-primary.me-1(href=`/statuses/${status.id}/edit`)= t('views.statuses.edit')
-              //- +buttonTo(`statuses/${status.id}`, 'delete')(class="btn btn-danger" value=t('views.statuses.delete'))
+              a.btn.btn-primary.me-1(href=`/statuses/${task.id}/edit`)= t('views.tasks.edit')
+              +buttonTo(`statuses/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.delete'))

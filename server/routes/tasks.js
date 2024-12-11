@@ -63,6 +63,21 @@ export default (app) => {
       }
       return reply;
     })
+    .get('/tasks/:id', { name: 'showTask' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        return checkAuth(req, reply)
+      }
+
+      const { id } = req.params;
+      try {
+        const task = await app.objection.models.task.query().findById(id);
+        reply.render('/tasks/card', { task, id });
+      } catch {
+        req.flash('error', i18next.t('flash.tasks.delete.error'));
+        reply.redirect(app.reverse('tasks'));
+      }
+      return reply;
+    })
     // .delete('/statuses/:id', async (req, reply) => {
     //   if (!req.isAuthenticated()) {
     //     return checkAuth(req, reply)

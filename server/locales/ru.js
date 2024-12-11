@@ -119,7 +119,8 @@ export default {
           actions: 'Действия',
           title: 'Задачи',
           status: 'Статус',
-          user: 'Исполнитель',
+          creatorId: 'Автор',
+          executorId: 'Исполнитель',
           label: 'Метка',
           new: {
             submit: 'Сохранить',
@@ -128,9 +129,10 @@ export default {
           edit: {
             title: 'Изменение задачи',
           },
-          submit: 'Сохранить',
+          submit: 'Показать',
           edit: 'Изменить',
           delete: 'Удалить',
+          myOnly: 'Только мои задачи',
         }
       },
     },
