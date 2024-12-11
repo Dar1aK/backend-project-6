@@ -29,6 +29,8 @@ block content
               label.input-group-text(for="data_label")= t('views.tasks.label')
               select.form-select#data_label(name="label")
                 option
+                each label in labels
+                  option(value=label.id, selected=(filters.label == label.id ? 'selected' : false))= label.name
         .mb-3.form-check
           input.form-check-input(id="data_isCreatorUser", type="checkbox", name="isCreatorUser", checked=(filters.isCreatorUser))
           label.form-check-label(for="data_isCreatorUser")= t('views.tasks.myOnly')

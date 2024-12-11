@@ -1,0 +1,25 @@
+extends ../layouts/application.pug
+
+block header
+  .d-flex.flex-column
+    = t('views.labels.title')
+    a.btn.btn-primary.align-self-start.mt-3(href=route('newLabel'))= t('views.labels.create')
+
+block content
+  table.table.table-striped
+    thead
+      tr
+        th= t('views.labels.id')
+        th= t('views.labels.name')
+        th= t('views.labels.createdAt')
+        th= t('views.labels.actions')
+    tbody
+      each label in labels
+        tr
+          td= label.id
+          td= label.name
+          td= formatDate(label.createdAt)
+          td
+            .d-flex.flex-wrap
+              a.btn.btn-primary.me-1(href=`/labels/${label.id}/edit`)= t('views.labels.edit')
+              +buttonTo(`labels/${label.id}`, 'delete')(class="btn btn-danger" value=t('views.labels.delete'))

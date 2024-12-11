@@ -42,8 +42,9 @@ export default (app) => {
 
       tasks = await tasks;
       const statuses = await app.objection.models.taskStatus.query();
+      const labels = await app.objection.models.label.query();
       const users = await app.objection.models.user.query();
-      reply.render('tasks/index', { tasks, statuses, users, filters });
+      reply.render('tasks/index', { tasks, statuses, users, labels, filters });
       return reply;
     })
     .get('/tasks/new', { name: 'newTask' }, async (req, reply) => {
@@ -53,8 +54,9 @@ export default (app) => {
 
       const task = new app.objection.models.task();
       const statuses = await app.objection.models.taskStatus.query();
+      const labels = await app.objection.models.label.query();
       const users = await app.objection.models.user.query();
-      reply.render('tasks/new', { task, statuses, users });
+      reply.render('tasks/new', { task, statuses, users, labels });
       return reply;
     })
     .post('/tasks', async (req, reply) => {
@@ -71,7 +73,10 @@ export default (app) => {
         reply.redirect(app.reverse('tasks'));
       } catch ({ data }) {
         req.flash('error', i18next.t('flash.tasks.create.error'));
-        reply.render('tasks/new', { task, errors: data });
+        const statuses = await app.objection.models.taskStatus.query();
+        const labels = await app.objection.models.label.query();
+        const users = await app.objection.models.user.query();
+        reply.render('tasks/new', { task, errors: data, statuses, labels, users });
       }
 
       return reply;
@@ -85,8 +90,9 @@ export default (app) => {
       try {
         const task = await app.objection.models.task.query().findById(id);
         const statuses = await app.objection.models.taskStatus.query();
+        const labels = await app.objection.models.label.query();
         const users = await app.objection.models.user.query();
-        reply.render('/tasks/edit', { task, id, statuses, users });
+        reply.render('/tasks/edit', { task, id, statuses, users, labels });
       } catch {
         req.flash('error', i18next.t('flash.tasks.delete.error'));
         reply.redirect(app.reverse('tasks'));
@@ -155,8 +161,9 @@ export default (app) => {
       } catch ({ data }) {
         req.flash('error', i18next.t('flash.tasks.edit.error'));
         const statuses = await app.objection.models.taskStatus.query();
+        const labels = await app.objection.models.label.query();
         const users = await app.objection.models.user.query();
-        reply.render('/tasks/edit', { task, id, statuses, users, errors: data })
+        reply.render('/tasks/edit', { task, id, statuses, users, labels, errors: data })
       }
 
       return reply;

@@ -12,5 +12,9 @@ block content
     +textarea(task, 'description', error)
     +select(task, 'statusId', 'name', statuses, error)
     +select(task, 'executorId', 'email', users, error)
-    +input(task, 'label', errors)(type="text")
+    .mb-3
+      label(for="data_label")= t('views.tasks.labels')
+      select.form-control#data_label(name="data[label]" multiple="multiple")
+        each lab in labels
+          option(value=lab.id, selected=(task.label == lab.id ? 'selected' : false))= lab.name
     +submit(task)(value=t('views.tasks.buttons.edit'))
