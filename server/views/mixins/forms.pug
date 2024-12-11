@@ -34,8 +34,7 @@ mixin textarea(entity, propertyName, errors = {})
       id= inputId
       name=getInputName(propertyName)
       class=classLine
-      value=_.get(entity, propertyName, '')
-    )&attributes(attributes)
+    )&attributes(attributes)= _.get(entity, propertyName, '')
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
 
@@ -43,6 +42,7 @@ mixin select(entity, propertyName, options = [], errors = {})
   - propertyErrors = _.get(errors, propertyName)
   - classLine = 'form-control' + (_.isEmpty(propertyErrors) ? '' : ' is-invalid')
   - inputId = getInputId(propertyName)
+  - val = _.get(entity, propertyName, '')
   .mb-3(class=(errors[propertyName] && 'has-danger'))
     label(
       for= inputId
@@ -51,11 +51,11 @@ mixin select(entity, propertyName, options = [], errors = {})
       id= inputId
       name=getInputName(propertyName)
       class=classLine
-      value=_.get(entity, propertyName, '')
+      value=val
     )&attributes(attributes)
       option
       each opt in options
-        option(value=opt.id)= opt.name
+        option(value=opt.id, selected=(val == opt.id ? 'selected' : false))= opt.name
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
 

@@ -10,16 +10,16 @@ block content
       .lead.fw-normal.mb-4= task.description
     .col-12.col-md-4.border-start.px-3.order-1.order-md-2.mb-3.mb-md-0
       .mb-2
-        span.me-1.badge.bg-danger.text-white= task.name
+        span.me-1.badge.bg-danger.text-white= task.status
       .d-flex.flex-wrap.mb-3
-        span.text-muted.me-2= 'name'
-        span= 'text'
+        span.text-muted.me-2= t('views.tasks.creatorId')
+        span= task.creatorId
       .d-flex.flex-wrap.mb-3
-        span.text-muted.me-2= 'name'
-        span= 'text'
+        span.text-muted.me-2= t('views.tasks.executorId')
+        span= task.executorId
       .d-flex.flex-wrap.mb-3
-        span.text-muted.me-2= 'name'
-        span= 'text'
-      //- .d-flex.flex-wrap
-      //-   a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`)= t('views.tasks.edit')
-      //-   +buttonTo(`tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.delete'))
+        span.text-muted.me-2= t('views.tasks.createdAt')
+        span= formatDate(task.createdAt)
+      .d-flex.flex-wrap
+        a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`)= t('views.tasks.buttons.edit')
+        +buttonTo(`tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.buttons.delete'))

@@ -37,11 +37,12 @@ export default (app) => {
       const task = new app.objection.models.task();
       task.$set(req.body.data);
       try {
-        const validTask = await app.objection.models.task.fromJson(req.body.data);
+        const currentUserId = req?.user?.getUserId(req.user)
+        const validTask = await app.objection.models.task.fromJson({...req.body.data, creatorId: `${currentUserId}` });
         await app.objection.models.task.query().insert(validTask);
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
-      } catch ({ data }) {
+      } catch ( { data } ) {
         req.flash('error', i18next.t('flash.tasks.create.error'));
         reply.render('tasks/new', { task, errors: data });
       }
@@ -56,7 +57,9 @@ export default (app) => {
       const { id } = req.params;
       try {
         const task = await app.objection.models.task.query().findById(id);
-        reply.render('/tasks/edit', { task, id });
+        const statuses = await app.objection.models.taskStatus.query();
+        const users = await app.objection.models.user.query();
+        reply.render('/tasks/edit', { task, id, statuses, users });
       } catch {
         req.flash('error', i18next.t('flash.tasks.delete.error'));
         reply.redirect(app.reverse('tasks'));
@@ -78,46 +81,48 @@ export default (app) => {
       }
       return reply;
     })
-    // .delete('/statuses/:id', async (req, reply) => {
-    //   if (!req.isAuthenticated()) {
-    //     return checkAuth(req, reply)
-    //   }
+    .delete('/tasks/:id', async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        return checkAuth(req, reply)
+      }
 
-    //   const { id } = req.params;
-    //   try {
-    //     await app.objection.models.taskStatus.query().deleteById(id);
-    //     req.flash('info', i18next.t('flash.statuses.delete.success'));
-    //   } catch {
-    //     req.flash('error', i18next.t('flash.statuses.delete.error'));
-    //   }
-    //   reply.redirect(app.reverse('statuses'));
-    // })
-    // .patch('/statuses/:id', async (req, reply) => {
-    //   if (!req.isAuthenticated()) {
-    //     return checkAuth(req, reply)
-    //   }
+      const { id } = req.params;
+      try {
+        await app.objection.models.task.query().deleteById(id);
+        req.flash('info', i18next.t('flash.tasks.delete.success'));
+      } catch {
+        req.flash('error', i18next.t('flash.tasks.delete.error'));
+      }
+      reply.redirect(app.reverse('tasks'));
+    })
+    .patch('/tasks/:id', async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        return checkAuth(req, reply)
+      }
 
-    //   const { id } = req.params;
-    //   const status = new app.objection.models.taskStatus();
-    //   status.$set(req.body.data);
+      const { id } = req.params;
+      const task = new app.objection.models.task();
+      task.$set(req.body.data);
 
-    //   try {
-    //     const validStatus = await app.objection.models.taskStatus.fromJson(req.body.data);
-    //     await app.objection.models.taskStatus.query().where('id', id).first().then(value => {
-    //       if(!value) {
-    //           throw Error('Status not found')
-    //       }
+      try {
+        const validTask = await app.objection.models.task.fromJson(req.body.data);
+        await app.objection.models.task.query().where('id', id).first().then(value => {
+          if(!value) {
+              throw Error('Status not found')
+          }
 
-    //       return value.$query().patch(validStatus)
-    //   })
+          return value.$query().patch(validTask)
+      })
 
-    //     req.flash('info', i18next.t('flash.statuses.edit.success'));
-    //     reply.redirect(app.reverse('statuses'));
-    //   } catch ({ data }) {
-    //     req.flash('error', i18next.t('flash.statuses.edit.error'));
-    //     reply.render('/statuses/edit', { status, errors: data })
-    //   }
+        req.flash('info', i18next.t('flash.tasks.edit.success'));
+        reply.redirect(app.reverse('tasks'));
+      } catch ({ data }) {
+        req.flash('error', i18next.t('flash.tasks.edit.error'));
+        const statuses = await app.objection.models.taskStatus.query();
+        const users = await app.objection.models.user.query();
+        reply.render('/tasks/edit', { task, id, statuses, users, errors: data })
+      }
 
-    //   return reply;
-    // });
+      return reply;
+    });
 };

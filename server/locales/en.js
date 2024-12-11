@@ -131,9 +131,11 @@ export default {
         edit: {
           title: 'Edit task',
         },
-        submit: 'Show',
-        edit: 'Edit',
-        delete: 'Delete',
+        buttons: {
+          submit: 'Show',
+          edit: 'Edit',
+          delete: 'Delete',
+        },
         myOnly: 'Only my tasks',
       }
     },

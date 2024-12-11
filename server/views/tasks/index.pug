@@ -32,7 +32,7 @@ block content
         .mb-3.form-check
           input.form-check-input(id="data_isCreatorUser", type="checkbox", name="isCreatorUser")
           label.form-check-label(for="data_isCreatorUser")= t('views.tasks.myOnly')
-        +submit(user)(value=t('views.tasks.submit'))
+        +submit(user)(value=t('views.tasks.buttons.submit'))
 
   table.table.table-striped
     thead
@@ -56,5 +56,5 @@ block content
           td= formatDate(task.createdAt)
           td
             .d-flex.flex-wrap
-              a.btn.btn-primary.me-1(href=`/statuses/${task.id}/edit`)= t('views.tasks.edit')
-              +buttonTo(`statuses/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.delete'))
+              a.btn.btn-primary.me-1(href=`/statuses/${task.id}/edit`)= t('views.tasks.buttons.edit')
+              +buttonTo(`statuses/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.buttons.delete'))

@@ -129,9 +129,11 @@ export default {
           edit: {
             title: 'Изменение задачи',
           },
-          submit: 'Показать',
-          edit: 'Изменить',
-          delete: 'Удалить',
+          buttons: {
+            submit: 'Показать',
+            edit: 'Изменить',
+            delete: 'Удалить',
+          },
           myOnly: 'Только мои задачи',
         }
       },
