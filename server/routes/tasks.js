@@ -34,8 +34,8 @@ export default (app) => {
         return checkAuth(req, reply)
       }
 
-      const tasks = new app.objection.models.task();
-      tasks.$set(req.body.data);
+      const task = new app.objection.models.task();
+      task.$set(req.body.data);
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
         await app.objection.models.task.query().insert(validTask);
@@ -43,26 +43,26 @@ export default (app) => {
         reply.redirect(app.reverse('tasks'));
       } catch ({ data }) {
         req.flash('error', i18next.t('flash.tasks.create.error'));
-        reply.render('tasks/new', { tasks, errors: data });
+        reply.render('tasks/new', { task, errors: data });
       }
 
       return reply;
     })
-    // .get('/tasks/:id/edit', { name: 'editTasks' }, async (req, reply) => {
-    //   if (!req.isAuthenticated()) {
-    //     return checkAuth(req, reply)
-    //   }
+    .get('/tasks/:id/edit', { name: 'editTasks' }, async (req, reply) => {
+      if (!req.isAuthenticated()) {
+        return checkAuth(req, reply)
+      }
 
-    //   const { id } = req.params;
-    //   try {
-    //     const tasks = await app.objection.models.task.query().findById(id);
-    //     reply.render('/tasks/edit', { tasks, id });
-    //   } catch {
-    //     req.flash('error', i18next.t('flash.tasks.delete.error'));
-    //     reply.redirect(app.reverse('tasks'));
-    //   }
-    //   return reply;
-    // })
+      const { id } = req.params;
+      try {
+        const task = await app.objection.models.task.query().findById(id);
+        reply.render('/tasks/edit', { task, id });
+      } catch {
+        req.flash('error', i18next.t('flash.tasks.delete.error'));
+        reply.redirect(app.reverse('tasks'));
+      }
+      return reply;
+    })
     // .delete('/statuses/:id', async (req, reply) => {
     //   if (!req.isAuthenticated()) {
     //     return checkAuth(req, reply)

@@ -12,6 +12,15 @@ export const up = (knex) => {
       table.string('name');
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
+    }),
+    knex.schema.createTable('tasks', (table) => {
+      table.increments('id').primary();
+      table.string('name');
+      table.string('statusId');
+      table.string('creatorId');
+      table.string('executorId');
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+      table.timestamp('updated_at').defaultTo(knex.fn.now());
     })
   ])
 };
@@ -19,6 +28,7 @@ export const up = (knex) => {
 export const down = (knex) => {
   return Promise.all([
     knex.schema.dropTable('users'),
-    knex.schema.dropTable('task_statuses')
+    knex.schema.dropTable('task_statuses'),
+    knex.schema.dropTable('tasks')
   ])
 };
