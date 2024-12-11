@@ -16,5 +16,21 @@
     "existing": {
       "name": "111"
     }
+  },
+  "tasks": {
+    "new": {
+      "name": "name123",
+      "description": "description123",
+      "statusId": "1",
+      "creatorId": "1",
+      "executorId": "1"
+    },
+    "existing": {
+      "name": "name111",
+      "description": "description111",
+      "statusId": "1",
+      "creatorId": "1",
+      "executorId": "1"
+    }
   }
 }

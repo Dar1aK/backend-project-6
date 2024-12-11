@@ -113,8 +113,17 @@ export default (app) => {
         return checkAuth(req, reply)
       }
 
+      const currentUserId = req?.user?.getUserId(req.user)
       const { id } = req.params;
+
       try {
+      const task = await app.objection.models.task.query().findById(id);
+      if (task.creatorId != currentUserId) {
+        req.flash('error', i18next.t('flash.tasks.delete.error'));
+        reply.redirect(app.reverse('tasks'));
+        return reply;
+      }
+
         await app.objection.models.task.query().deleteById(id);
         req.flash('info', i18next.t('flash.tasks.delete.success'));
       } catch {

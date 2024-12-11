@@ -22,6 +22,7 @@ export default {
         },
         delete: {
           error: 'You can\'t edit or delete another user',
+          deleteConnected: 'Can\'t edit or delete user',
           success: 'User deleted successfully',
         }
       },

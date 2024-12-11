@@ -65,6 +65,14 @@ export default (app) => {
       }
 
       const { id } = req.params;
+      const isTasksConnectedWithStatus = await app.objection.models.task.query().where('statusId', id)
+
+      if (isTasksConnectedWithStatus) {
+        req.flash('error', i18next.t('flash.statuses.delete.error'));
+        reply.redirect(app.reverse('statuses'));
+        return reply;
+      }
+
       try {
         await app.objection.models.taskStatus.query().deleteById(id);
         req.flash('info', i18next.t('flash.statuses.delete.success'));

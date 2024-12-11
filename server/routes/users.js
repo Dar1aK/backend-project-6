@@ -30,6 +30,7 @@ export default (app) => {
     .get('/users/:id/edit', { name: 'editUser' }, async (req, reply) => {
       const { id } = req.params;
       const currentUserId = req?.user?.getUserId(req.user)
+
       if (currentUserId == id) {
         const user = await app.objection.models.user.query().findById(id);
         reply.render('/users/edit', { user });
@@ -37,6 +38,7 @@ export default (app) => {
         req.flash('error', i18next.t('flash.users.delete.error'));
         reply.redirect(app.reverse('users'));
       }
+
       return reply;
     })
     .delete('/users/:id', async (req, reply) => {
@@ -47,13 +49,18 @@ export default (app) => {
         reply.redirect(app.reverse('root'));
         return reply
       }
+
+      const isTasksConnectedWithUser = await app.objection.models.task.query().where('executorId', `${currentUserId}`)
       if (currentUserId == id) {
         req.logOut();
         await app.objection.models.user.query().deleteById(id);
         req.flash('info', i18next.t('flash.users.delete.success'));
+      } else if (isTasksConnectedWithUser) {
+        req.flash('error', i18next.t('flash.users.deleteConnected.error'));
       } else {
         req.flash('error', i18next.t('flash.users.delete.error'));
       }
+
       reply.redirect(app.reverse('users'));
     })
     .patch('/users/:id', async (req, reply) => {
