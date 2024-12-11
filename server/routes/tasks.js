@@ -12,10 +12,38 @@ export default (app) => {
         return checkAuth(req, reply)
       }
 
-      const tasks = await app.objection.models.task.query();
+      const filters = (() => {
+        const pairs = req.url?.split('?')[1]?.split('&')
+        return (pairs || []).reduce((acc, pair) => {
+          const [name, value] = pair.split('=')
+          return {...acc, [name]: value}
+        }, {})
+      })()
+
+      let tasks =  app.objection.models.task.query()
+
+      if (filters.status) {
+        tasks.where('statusId', filters.status)
+      }
+
+      if (filters.executor) {
+        tasks.where('executorId', filters.executor)
+      }
+
+      if (filters.label) {
+        tasks.where('label', filters.label)
+      }
+
+      if (filters.isCreatorUser === 'on') {
+        const currentUserId = req?.user?.getUserId(req.user)
+        tasks.where('creatorId', currentUserId)
+
+      }
+
+      tasks = await tasks;
       const statuses = await app.objection.models.taskStatus.query();
       const users = await app.objection.models.user.query();
-      reply.render('tasks/index', { tasks, statuses, users });
+      reply.render('tasks/index', { tasks, statuses, users, filters });
       return reply;
     })
     .get('/tasks/new', { name: 'newTask' }, async (req, reply) => {
@@ -37,12 +65,11 @@ export default (app) => {
       const task = new app.objection.models.task();
       task.$set(req.body.data);
       try {
-        const currentUserId = req?.user?.getUserId(req.user)
-        const validTask = await app.objection.models.task.fromJson({...req.body.data, creatorId: `${currentUserId}` });
+        const validTask = await app.objection.models.task.fromJson(req.body.data);
         await app.objection.models.task.query().insert(validTask);
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
-      } catch ( { data } ) {
+      } catch ({ data }) {
         req.flash('error', i18next.t('flash.tasks.create.error'));
         reply.render('tasks/new', { task, errors: data });
       }
