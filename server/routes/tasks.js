@@ -41,7 +41,7 @@ export default (app) => {
       }
 
       tasks = await tasks;
-      console.log("taskstasks", tasks)
+      console.log("taskstasks", tasks, tasks.labelId)
       const statuses = await app.objection.models.taskStatus.query();
       const labels = await app.objection.models.label.query();
       const users = await app.objection.models.user.query();
@@ -109,6 +109,7 @@ export default (app) => {
       const { id } = req.params;
       try {
         const task = await app.objection.models.task.query().findById(id);
+        console.log('task get', task, task.labelId)
         reply.render('/tasks/card', { task, id });
       } catch {
         req.flash('error', i18next.t('flash.tasks.delete.error'));

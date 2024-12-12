@@ -15,11 +15,11 @@ module.exports = class Task extends unique(BaseModel) {
       properties: {
         id: { type: 'integer' },
         name: { type: 'string', minLength: 1 },
-        description: { type: 'string' },
+        // description: { type: 'string' },
         statusId: { type: 'string' },
         creatorId: { type: 'string' },
-        executorId: { type: 'string' },
-        labelId: { "type": "array",  "items": { "type": "string" } },
+        // executorId: { type: 'string' },
+        // labelId: { "type": "array",  "items": { "type": "string" } },
       },
       additionalProperties: true
     }
@@ -34,7 +34,7 @@ module.exports = class Task extends unique(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: TaskStatus,
         join: {
-          from: 'tasks.statusId',
+          from: 'tasks.status_id',
           to: 'task_statuses.id'
         }
       },
@@ -42,7 +42,7 @@ module.exports = class Task extends unique(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'tasks.executorId',
+          from: 'tasks.executor_id',
           to: 'users.id'
         }
       },
@@ -50,7 +50,7 @@ module.exports = class Task extends unique(BaseModel) {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
-          from: 'tasks.creatorId',
+          from: 'tasks.creator_id',
           to: 'users.id'
         }
       },
@@ -60,8 +60,8 @@ module.exports = class Task extends unique(BaseModel) {
         join: {
           from: 'tasks.id',
           through: {
-            from: 'tasks_labels.tasksId',
-            to: 'tasks_labels.labelsId'
+            from: 'tasks_labels.tasks_id',
+            to: 'tasks_labels.labels_id'
           },
           to: 'labels.id'
         }
