@@ -20,7 +20,7 @@ export default (app) => {
         }, {})
       })()
 
-      let tasks =  app.objection.models.task.query()
+      let tasks =  app.objection.models.task.query().withGraphJoined('[status, creator, executor, label]')
 
       if (filters.status) {
         tasks.where('statusId', filters.status)
@@ -41,6 +41,7 @@ export default (app) => {
       }
 
       tasks = await tasks;
+      console.log("taskstasks", tasks)
       const statuses = await app.objection.models.taskStatus.query();
       const labels = await app.objection.models.label.query();
       const users = await app.objection.models.user.query();
@@ -69,6 +70,7 @@ export default (app) => {
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
         await app.objection.models.task.query().insert(validTask);
+        console.log('validTaskvalidTask', validTask)
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
       } catch ({ data }) {
@@ -152,6 +154,7 @@ export default (app) => {
           if(!value) {
               throw Error('Status not found')
           }
+          console.log('validTaskvalidTask', validTask)
 
           return value.$query().patch(validTask)
       })

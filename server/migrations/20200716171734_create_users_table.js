@@ -20,7 +20,7 @@ export const up = (knex) => {
       table.string('status_id');
       table.string('creator_id');
       table.string('executor_id');
-      table.string('label');
+      table.string('label_id');
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
     }),
@@ -29,6 +29,10 @@ export const up = (knex) => {
       table.string('name');
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
+    }),
+    knex.schema.createTable('tasks_labels', table => {
+      table.integer('tasks_id').references('tasks.id');
+      table.integer('labels_id').references('labels.id');
     })
   ])
 };

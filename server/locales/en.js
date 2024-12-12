@@ -158,7 +158,7 @@ export default {
         id: 'ID',
         name: 'Name',
         createdAt: 'Created at',
-        create: "Create status",
+        create: "Create label",
         actions: 'Actions',
         labels: 'Labels',
         title: 'Labels',

@@ -16,7 +16,7 @@ module.exports = class Task extends unique(BaseModel) {
         id: { type: 'integer' },
         name: { type: 'string', minLength: 1 },
         description: { type: 'string' },
-        creatorId: { type: 'string' },
+        // creatorId: { type: 'string' },
       },
       additionalProperties: true
     }
@@ -43,11 +43,23 @@ module.exports = class Task extends unique(BaseModel) {
           to: 'users.id'
         }
       },
-      labels: {
+      creator: {
+        relation: Model.BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'tasks.creatorId',
+          to: 'users.id'
+        }
+      },
+      label: {
         relation: Model.ManyToManyRelation,
         modelClass: Label,
         join: {
-          from: 'tasks.label',
+          from: 'tasks.id',
+          through: {
+            from: 'tasks_labels.tasksId',
+            to: 'tasks_labels.labelsId'
+          },
           to: 'labels.id'
         }
       }
