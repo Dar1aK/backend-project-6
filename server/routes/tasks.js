@@ -41,7 +41,6 @@ export default (app) => {
       }
 
       tasks = await tasks;
-      console.log("taskstasks", tasks, tasks.labelId)
       const statuses = await app.objection.models.taskStatus.query();
       const labels = await app.objection.models.label.query();
       const users = await app.objection.models.user.query();
@@ -70,7 +69,6 @@ export default (app) => {
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
         await app.objection.models.task.query().insert(validTask);
-        console.log('validTaskvalidTask', validTask)
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
       } catch ({ data }) {
@@ -108,8 +106,7 @@ export default (app) => {
 
       const { id } = req.params;
       try {
-        const task = await app.objection.models.task.query().findById(id);
-        console.log('task get', task, task.labelId)
+        const task = await app.objection.models.task.query().findById(id).withGraphJoined('[status, creator, executor, label]');
         reply.render('/tasks/card', { task, id });
       } catch {
         req.flash('error', i18next.t('flash.tasks.delete.error'));
@@ -155,7 +152,6 @@ export default (app) => {
           if(!value) {
               throw Error('Status not found')
           }
-          console.log('validTaskvalidTask', validTask)
 
           return value.$query().patch(validTask)
       })

@@ -10,14 +10,14 @@ block content
       .lead.fw-normal.mb-4= task.description
     .col-12.col-md-4.border-start.px-3.order-1.order-md-2.mb-3.mb-md-0
       .mb-2
-        span.me-1.badge.bg-danger.text-white= task.statusId
-        span.me-1.badge.bg-info.text-white= task.labelId
+        span.me-1.badge.bg-danger.text-white= task.status && task.status.name
+        span.me-1.badge.bg-info.text-white= task.label && task.label.name
       .d-flex.flex-wrap.mb-3
         span.text-muted.me-2= t('views.tasks.creatorId')
-        span= task.creatorId
+        span= task.creator && `${task.creator.firstName} ${task.creator.lastName}`
       .d-flex.flex-wrap.mb-3
         span.text-muted.me-2= t('views.tasks.executorId')
-        span= task.executorId
+        span= task.executor && `${task.executor.firstName} ${task.executor.lastName}`
       .d-flex.flex-wrap.mb-3
         span.text-muted.me-2= t('views.tasks.createdAt')
         span= formatDate(task.createdAt)
