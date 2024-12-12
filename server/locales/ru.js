@@ -137,7 +137,7 @@ export default {
           status: 'Статус',
           creatorId: 'Автор',
           executorId: 'Исполнитель',
-          label: 'Метка',
+          labels: 'Метки',
           new: {
             submit: 'Сохранить',
             signUp: 'Регистрация',

@@ -16,7 +16,10 @@ module.exports = class Task extends unique(BaseModel) {
         id: { type: 'integer' },
         name: { type: 'string', minLength: 1 },
         description: { type: 'string' },
-        // creatorId: { type: 'string' },
+        statusId: { type: 'string' },
+        creatorId: { type: 'string' },
+        executorId: { type: 'string' },
+        labelId: { "type": "array",  "items": { "type": "string" } },
       },
       additionalProperties: true
     }

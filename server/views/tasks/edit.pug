@@ -16,5 +16,5 @@ block content
       label(for="data_label")= t('views.tasks.labels')
       select.form-control#data_labelId(name="data[labelId]" multiple="multiple")
         each lab in labels
-          option(value=lab.id, selected=(task.labelId == lab.id ? 'selected' : false))= lab.name
+          option(value=lab.id, selected=(task.labelId && task.labelId.includes(`${lab.id}`) ? 'selected' : false))= lab.name
     +submit(task)(value=t('views.tasks.buttons.edit'))

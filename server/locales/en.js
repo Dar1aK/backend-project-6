@@ -139,7 +139,7 @@ export default {
         status: 'Status',
         creatorId: 'Author',
         executorId: 'Executor',
-        label: 'Label',
+        labels: 'Labels',
         new: {
           title: 'Creating task',
           submit: 'Create',
