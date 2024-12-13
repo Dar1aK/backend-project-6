@@ -41,6 +41,8 @@ export default (app) => {
       }
 
       tasks = await tasks;
+      console.log('final task', tasks)
+
       const statuses = await app.objection.models.taskStatus.query();
       const labels = await app.objection.models.label.query();
       const users = await app.objection.models.user.query();
@@ -68,15 +70,24 @@ export default (app) => {
       task.$set(req.body.data);
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
-        await app.objection.models.task.query().insert(validTask);
+
+        const insertedTask = await app.objection.models.task.transaction(async (trx) => {
+          const insertedTask = await app.objection.models.task.query(trx)
+            .insertGraph(validTask, { relate: ['labels'] });
+          return insertedTask;
+        });
+
+        console.log('insertedTask', insertedTask)
+        // await app.objection.models.task.query().insert(validTask);
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
-      } catch ({ data }) {
+      } catch ( data ) {
+        console.log("ERROR", data)
         req.flash('error', i18next.t('flash.tasks.create.error'));
         const statuses = await app.objection.models.taskStatus.query();
         const labels = await app.objection.models.label.query();
         const users = await app.objection.models.user.query();
-        reply.render('tasks/new', { task, errors: data, statuses, labels, users });
+        reply.render('tasks/new', { task, errors: undefined, statuses, labels, users });
       }
 
       return reply;
