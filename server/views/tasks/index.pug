@@ -48,7 +48,7 @@ block content
         th= t('views.tasks.actions')
     tbody
       each task in tasks
-        tr
+        tr(data-testid="task-element")
           td= task.id
           td
             a(href=`/tasks/${task.id}`)= task.name

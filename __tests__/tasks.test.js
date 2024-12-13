@@ -139,6 +139,66 @@ describe('test tasks CRUD', () => {
     expect(response.statusCode).toBe(302);
   });
 
+  it('index with select filters', async () => {
+    const params2 = testData.tasks.new2;
+    const responseNew2 = await app.inject({
+      method: 'POST',
+      url: app.reverse('tasks'),
+      payload: {
+        data: params2,
+      },
+      cookies: cookie,
+    });
+
+    expect(responseNew2.statusCode).toBe(302);
+    //create new task
+
+    const filteredTasks = await app.inject({
+      method: 'GET',
+      url: 'tasks?status=1&executor=1&labelId=1',
+      cookies: cookie,
+    });
+
+    expect(filteredTasks.statusCode).toBe(200);
+
+    const allTasks = await models.task.query()
+    const regexTestId = /(data-testid=\"task-element\")/g;
+
+    expect(filteredTasks.payload.match(regexTestId).length).toBe(1);
+
+    expect(allTasks.length).toBe(2);
+  });
+
+  it('index with filter isCreatorUser', async () => {
+    const params3 = testData.tasks.new3;
+    const responseNew3 = await app.inject({
+      method: 'POST',
+      url: app.reverse('tasks'),
+      payload: {
+        data: params3,
+      },
+      cookies: cookie,
+    });
+
+    expect(responseNew3.statusCode).toBe(302);
+    //create task
+
+    const filteredTasks = await app.inject({
+      method: 'GET',
+      url: 'tasks?isCreatorUser=on',
+      cookies: cookie,
+    });
+
+    expect(filteredTasks.statusCode).toBe(200);
+
+    const allTasks = await models.task.query()
+    const regexTestId = /(data-testid=\"task-element\")/g;
+
+    expect(filteredTasks.payload.match(regexTestId).length).toBe(1);
+
+    expect(allTasks.length).toBe(3);
+  });
+
   afterEach(async () => {
     // Пока Segmentation fault: 11
     // после каждого теста откатываем миграции
