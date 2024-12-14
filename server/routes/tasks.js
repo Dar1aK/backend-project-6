@@ -20,40 +20,47 @@ export default (app) => {
       }
 
       const filters = (() => {
-        const pairs = req.url?.split('?')[1]?.split('&')
+        const pairs = req.url.split('?')[1]?.split('&')
         return (pairs || []).reduce((acc, pair) => {
           const [name, value] = pair.split('=')
           return {...acc, [name]: value}
         }, {})
       })()
 
-      let tasks = app.objection.models.task.query().withGraphJoined('[status, creator, executor, label]')
+      try {
+        let tasks = app.objection.models.task.query().withGraphJoined('[status, creator, executor, label]')
 
-      if (filters.status) {
-        tasks.where('statusId', filters.status)
+        if (filters.status) {
+          tasks.where('statusId', filters.status)
+        }
+
+        if (filters.executor) {
+          tasks.skipUndefined().where('executorId', filters.executor)
+        }
+
+        if (filters.labels) {
+          tasks.skipUndefined().where('labels', filters.labels)
+        }
+
+        if (filters.isCreatorUser === 'on') {
+          const currentUserId = req?.user?.getUserId(req.user)
+          tasks.where('creatorId', currentUserId)
+
+        }
+
+        tasks = await tasks;
+        console.log('GET final task', tasks)
+
+        const statuses = await app.objection.models.taskStatus.query();
+        const labels = await app.objection.models.label.query();
+        const users = await app.objection.models.user.query();
+        reply.render('tasks/index', { tasks, statuses, users, labels, filters });
+      } catch (error) {
+        rollbar.log('GET tasks error', error);
+        console.log('ERROR', error)
+        const users = await app.objection.models.user.query();
+        reply.render('tasks/index', { users, filters: {}, labels: [], statuses: [], tasks: [] });
       }
-
-      if (filters.executor) {
-        tasks.skipUndefined().where('executorId', filters.executor)
-      }
-
-      if (filters.labels) {
-        tasks.skipUndefined().where('labels', filters.labels)
-      }
-
-      if (filters.isCreatorUser === 'on') {
-        const currentUserId = req?.user?.getUserId(req.user)
-        tasks.where('creatorId', currentUserId)
-
-      }
-
-      tasks = await tasks;
-      console.log('GET final task', tasks)
-
-      const statuses = await app.objection.models.taskStatus.query();
-      const labels = await app.objection.models.label.query();
-      const users = await app.objection.models.user.query();
-      reply.render('tasks/index', { tasks, statuses, users, labels, filters });
       return reply;
     })
     .get('/tasks/new', { name: 'newTask' }, async (req, reply) => {
@@ -77,7 +84,7 @@ export default (app) => {
       task.$set(req.body.data);
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
-        const labels = await app.objection.models.label.query().findByIds(validTask.labels)
+        const labels = await app.objection.models.label.query().skipUndefined().findByIds(validTask.labels)
 
         const insertedTask = await app.objection.models.task.transaction(async (trx) => {
           console.log('validTaskvalidTask', validTask, labels)
