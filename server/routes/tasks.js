@@ -31,7 +31,7 @@ export default (app) => {
       }
 
       if (filters.labels) {
-        tasks.skipUndefined().where('label', filters.label)
+        tasks.skipUndefined().where('labels', filters.labels)
       }
 
       if (filters.isCreatorUser === 'on') {
@@ -41,7 +41,7 @@ export default (app) => {
       }
 
       tasks = await tasks;
-      console.log('final task', tasks)
+      console.log('GET final task', tasks)
 
       const statuses = await app.objection.models.taskStatus.query();
       const labels = await app.objection.models.label.query();
@@ -70,18 +70,16 @@ export default (app) => {
       task.$set(req.body.data);
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
+        const labels = await app.objection.models.label.query().findByIds(validTask.labels)
 
         const insertedTask = await app.objection.models.task.transaction(async (trx) => {
-          console.log('validTaskvalidTask', validTask)
-
-          const labels = await app.objection.models.label.query().findByIds(validTask)
-          console.log('labelslabels', labels)
+          console.log('validTaskvalidTask', validTask, labels)
           const insertedTask = await app.objection.models.task.query(trx)
-            .insertGraph(validTask, { relate: ['labels'] });
+            .insertGraph({...validTask, labels}, { relate: ['labels'] });
           return insertedTask;
         });
 
-        console.log('insertedTask', insertedTask)
+        console.log('POST insertedTask', insertedTask)
         // await app.objection.models.task.query().insert(validTask);
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
@@ -122,6 +120,7 @@ export default (app) => {
       const { id } = req.params;
       try {
         const task = await app.objection.models.task.query().findById(id).withGraphJoined('[status, creator, executor, label]');
+        console.log('task card', task, task.labels)
         reply.render('/tasks/card', { task, id });
       } catch {
         req.flash('error', i18next.t('flash.tasks.delete.error'));
