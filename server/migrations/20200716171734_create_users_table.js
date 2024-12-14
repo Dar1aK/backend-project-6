@@ -23,7 +23,7 @@ export const up = (knex) => {
       table.string('creator_id');
       table.string('executor_id');
       // table.array('label_id');
-      table.specificType('label_id', 'string ARRAY');
+      table.specificType('labels', 'string ARRAY');
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
     }),

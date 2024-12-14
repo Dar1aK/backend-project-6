@@ -26,11 +26,11 @@ block content
                   option(value=user.id, selected=(filters.executor == user.id ? 'selected' : false))= user.email
           .col-12.col-md
             .input-group.mb-3
-              label.input-group-text(for="data_labelId")= t('views.tasks.label')
-              select.form-select#data_labelId(name="labelId")
+              label.input-group-text(for="data_labels")= t('views.tasks.label')
+              select.form-select#data_labels(name="labels")
                 option
                 each label in labels
-                  option(value=label.id, selected=(filters.label == label.id ? 'selected' : false))= label.name
+                  option(value=label.id, selected=(filters.labels == label.id ? 'selected' : false))= label.name
         .mb-3.form-check
           input.form-check-input(id="data_isCreatorUser", type="checkbox", name="isCreatorUser", checked=(filters.isCreatorUser))
           label.form-check-label(for="data_isCreatorUser")= t('views.tasks.myOnly')

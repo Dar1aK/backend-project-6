@@ -27,11 +27,11 @@ export default (app) => {
       }
 
       if (filters.executor) {
-        tasks.where('executorId', filters.executor)
+        tasks.skipUndefined().where('executorId', filters.executor)
       }
 
-      if (filters.label) {
-        tasks.where('label', filters.label)
+      if (filters.labels) {
+        tasks.skipUndefined().where('label', filters.label)
       }
 
       if (filters.isCreatorUser === 'on') {

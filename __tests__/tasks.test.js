@@ -155,7 +155,7 @@ describe('test tasks CRUD', () => {
 
     const filteredTasks = await app.inject({
       method: 'GET',
-      url: 'tasks?status=1&executor=1&labelId=1',
+      url: 'tasks?status=1&executor=1&labels=1',
       cookies: cookie,
     });
 
