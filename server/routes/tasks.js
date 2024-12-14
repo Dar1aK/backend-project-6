@@ -38,9 +38,9 @@ export default (app) => {
           tasks.skipUndefined().where('executorId', filters.executor)
         }
 
-        if (filters.labels) {
-          tasks.skipUndefined().where('labels', filters.labels)
-        }
+        // if (filters.labels) {
+        //   tasks.skipUndefined().where('labels', Number(filters.labels))
+        // }
 
         if (filters.isCreatorUser === 'on') {
           const currentUserId = req?.user?.getUserId(req.user)
