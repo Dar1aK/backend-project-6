@@ -1,4 +1,11 @@
 import i18next from 'i18next';
+import Rollbar from 'rollbar';
+
+var rollbar = new Rollbar({
+  accessToken: process.env.ROLLBAR_TOKEN,
+  captureUncaught: true,
+  captureUnhandledRejections: true,
+});
 
 export default (app) => {
   app
@@ -20,9 +27,10 @@ export default (app) => {
         await app.objection.models.user.query().insert(validUser);
         req.flash('info', i18next.t('flash.users.create.success'));
         reply.redirect(app.reverse('root'));
-      } catch ({ data }) {
+      } catch (error) {
+        rollbar.log('POST user error', error);
         req.flash('error', i18next.t('flash.users.create.error'));
-        reply.render('users/new', { user, errors: data });
+        reply.render('users/new', { user, errors: error && error.data });
       }
 
       return reply;
@@ -87,9 +95,10 @@ export default (app) => {
 
         req.flash('info', i18next.t('flash.users.edit.success'));
         reply.redirect(app.reverse('users'));
-      } catch ({ data }) {
+      } catch (error) {
+        rollbar.log('PATCH user error', error);
         req.flash('error', i18next.t('flash.users.edit.error'));
-        reply.render('/users/edit', { user, errors: data })
+        reply.render('/users/edit', { user, errors: error && error.data })
       }
 
       return reply;
