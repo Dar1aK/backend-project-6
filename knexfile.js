@@ -37,7 +37,6 @@ export const production = {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
   },
-  pool: { min: 0, max: 200 },
   useNullAsDefault: true,
   migrations,
 };
