@@ -20,7 +20,7 @@ export default (app) => {
         }, {})
       })()
 
-      let tasks =  app.objection.models.task.query().withGraphJoined('[status, creator, executor, label]')
+      let tasks = app.objection.models.task.query().withGraphJoined('[status, creator, executor, label]')
 
       if (filters.status) {
         tasks.where('statusId', filters.status)
@@ -120,7 +120,7 @@ export default (app) => {
       const { id } = req.params;
       try {
         const task = await app.objection.models.task.query().findById(id).withGraphJoined('[status, creator, executor, label]');
-        console.log('task card', task, task.labels)
+        console.log('task card', task, 'objects', task.label, 'ids',task.labels)
         reply.render('/tasks/card', { task, id });
       } catch {
         req.flash('error', i18next.t('flash.tasks.delete.error'));
