@@ -11,7 +11,7 @@ block content
     +input(task, 'name', t('views.tasks.form.name'), errors)(type="text")
     +textarea(task, 'description', t('views.tasks.form.description'), error)
     +select(task, 'statusId', 'name', t('views.tasks.form.statusId'), statuses, error)
-    +select(task, 'executorId', 'email', t('views.tasks.form.email'), users, error)
+    +select(task, 'executorId', 'email', t('views.tasks.form.executorId'), users, error)
     .mb-3
       label(for="data_label")= t('views.tasks.form.labels')
       select.form-control#data_labels(name="data[labels]" multiple="multiple")

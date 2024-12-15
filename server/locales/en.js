@@ -173,6 +173,7 @@ export default {
           statusId: 'Status',
           email: 'Email',
           labels: 'Labels',
+          executorId: 'Executor',
         },
       },
       labels: {

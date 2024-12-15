@@ -171,6 +171,7 @@ export default {
           statusId: 'Статус',
           email: 'Email',
           labels: 'Метки',
+          executorId: 'Исполнитель',
         },
       },
       labels: {
