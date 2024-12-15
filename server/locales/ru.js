@@ -151,9 +151,10 @@ export default {
         creatorId: 'Автор',
         executorId: 'Исполнитель',
         label: 'Метки',
+        create: 'Создать задачу',
         new: {
           submit: 'Сохранить',
-          title: 'Создать задачу',
+          title: 'Создание задачи',
         },
         edit: {
           title: 'Изменение задачи',
