@@ -45,6 +45,7 @@ export const down = (knex) => {
     knex.schema.dropTable('users'),
     knex.schema.dropTable('task_statuses'),
     knex.schema.dropTable('tasks'),
-    knex.schema.dropTable('labels')
+    knex.schema.dropTable('labels'),
+    knex.schema.dropTable('tasks_labels')
   ])
 };
