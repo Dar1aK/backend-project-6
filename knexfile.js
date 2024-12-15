@@ -27,8 +27,6 @@ export const test = {
   migrations,
 };
 
-console.log('process.env***', process.env)
-
 export const production = {
   client: 'pg',
   connection: {
