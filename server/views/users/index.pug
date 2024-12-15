@@ -16,7 +16,7 @@ block content
       each user in users
         tr
           td= user.id
-          td= user.email
+          td= `${user.firstName} ${user.lastName}`
           td= formatDate(user.createdAt)
           td
             .d-flex.flex-wrap
