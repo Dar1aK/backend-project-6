@@ -71,7 +71,7 @@ export default (app) => {
       const { id } = req.params;
       const isTasksConnectedWithStatus = await app.objection.models.task.query().where('statusId', id)
 
-      if (isTasksConnectedWithStatus) {
+      if (isTasksConnectedWithStatus && isTasksConnectedWithStatus.length) {
         req.flash('error', i18next.t('flash.statuses.delete.error'));
         reply.redirect(app.reverse('statuses'));
         return reply;

@@ -58,7 +58,7 @@ export default (app) => {
         req.logOut();
         await app.objection.models.user.query().deleteById(id);
         req.flash('info', i18next.t('flash.users.delete.success'));
-      } else if (isTasksConnectedWithUser) {
+      } else if (isTasksConnectedWithUser && isTasksConnectedWithUser.length) {
         req.flash('error', i18next.t('flash.users.deleteConnected.error'));
       } else {
         req.flash('error', i18next.t('flash.users.delete.error'));
