@@ -156,7 +156,8 @@ export default {
         label: 'Labels',
         new: {
           title: 'Creating task',
-          submit: 'Create',
+          submit: 'Submit',
+          create: 'Create',
         },
         edit: {
           title: 'Edit task',

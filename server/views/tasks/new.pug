@@ -15,4 +15,4 @@ block content
       select.form-control#data_labels(name="data[labels]" multiple="multiple")
         each lab in labels
           option(value=lab.id, selected=(task.labels && task.labels.includes(`${lab.id}`) ? 'selected' : false))= lab.name
-    +submit(task)(value=t('views.tasks.new.submit'))
+    +submit(task)(value=t('views.tasks.new.create'))

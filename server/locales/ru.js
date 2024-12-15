@@ -153,6 +153,7 @@ export default {
         label: 'Метки',
         create: 'Создать задачу',
         new: {
+          create: 'Создать',
           submit: 'Сохранить',
           title: 'Создание задачи',
         },
