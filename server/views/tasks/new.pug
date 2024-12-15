@@ -8,7 +8,7 @@ block content
     input(id='data_creatorId' name='data[creatorId]' type='hidden' value=currentUserId)
     +input(task, 'name', t('views.tasks.form.name'),errors)(type="text")
     +textarea(task, 'description', t('views.tasks.form.description'), error)
-    +select(task, 'statusId', 'name', t('views.tasks.form.name'), statuses, error)
+    +select(task, 'statusId', 'name', t('views.tasks.form.statusId'), statuses, error)
     +select(task, 'executorId', 'email', t('views.tasks.form.email'), users, error)
     .mb-3
       label(for="data_label")= t('views.tasks.form.labels')
