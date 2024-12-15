@@ -8,12 +8,12 @@ block content
   +formFor()(action=`/tasks/${id}` method='post')
     input(name="_method" type="hidden" value='patch')
     input(id='data_creatorId' name='data[creatorId]' type='hidden' value=task.creatorId)
-    +input(task, 'name', errors)(type="text")
-    +textarea(task, 'description', error)
-    +select(task, 'statusId', 'name', statuses, error)
-    +select(task, 'executorId', 'email', users, error)
+    +input(task, 'name', t('views.tasks.form.name'), errors)(type="text")
+    +textarea(task, 'description', t('views.tasks.form.description'), error)
+    +select(task, 'statusId', 'name', t('views.tasks.form.statusId'), statuses, error)
+    +select(task, 'executorId', 'email', t('views.tasks.form.email'), users, error)
     .mb-3
-      label(for="data_label")= t('views.tasks.labels')
+      label(for="data_label")= t('views.tasks.form.labels')
       select.form-control#data_labels(name="data[labels]" multiple="multiple")
         each lab in labels
           option(value=lab.id, selected=(task.labels && task.labels.includes(`${lab.id}`) ? 'selected' : false))= lab.name

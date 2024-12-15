@@ -87,6 +87,10 @@ export default {
           signIn: 'Login',
           submit: 'Login',
         },
+        form: {
+          email: 'Email',
+          password: 'Password'
+        }
       },
       users: {
         id: 'ID',
@@ -100,6 +104,12 @@ export default {
         edit: 'Edit',
         delete: 'Delete',
         title: 'Users',
+        form: {
+          firstName: 'Firstname',
+          lastName: 'Lastname',
+          email: 'Email',
+          password: 'Password'
+        }
       },
       edit: {
         submit: 'Edit'
@@ -128,6 +138,9 @@ export default {
         submit: 'Save',
         edit: 'Edit',
         delete: 'Delete',
+        form: {
+          name: 'Name'
+        },
       },
       tasks: {
         id: 'ID',
@@ -153,6 +166,13 @@ export default {
           delete: 'Delete',
         },
         myOnly: 'Only my tasks',
+        form: {
+          name: 'Name',
+          description: 'Description',
+          statusId: 'Status',
+          email: 'Email',
+          labels: 'Labels',
+        },
       },
       labels: {
         id: 'ID',
@@ -169,6 +189,9 @@ export default {
         submit: 'Save',
         edit: 'Edit',
         delete: 'Delete',
+        form: {
+          name: 'Name'
+        },
       }
     },
   },

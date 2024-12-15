@@ -87,6 +87,10 @@ export default {
           signIn: 'Вход',
           submit: 'Войти',
         },
+        form: {
+          email: 'Email',
+          password: 'Пароль'
+        }
       },
       users: {
         id: 'ID',
@@ -100,6 +104,12 @@ export default {
         edit: 'Изменить',
         delete: 'Удалить',
         title: 'Пользователи',
+        form: {
+          firstName: 'Имя',
+          lastName: 'Фамилия',
+          email: 'Email',
+          password: 'Пароль'
+        }
       },
       edit: {
         submit: 'Изменить'
@@ -126,6 +136,9 @@ export default {
         submit: 'Сохранить',
         edit: 'Изменить',
         delete: 'Удалить',
+        form: {
+          name: 'Название',
+        },
       },
       tasks: {
         id: 'ID',
@@ -150,6 +163,13 @@ export default {
           delete: 'Удалить',
         },
         myOnly: 'Только мои задачи',
+        form: {
+          name: 'Название',
+          description: 'Описание',
+          statusId: 'Статус',
+          email: 'Email',
+          labels: 'Метки',
+        },
       },
       labels: {
         id: 'ID',
@@ -167,6 +187,9 @@ export default {
         submit: 'Сохранить',
         edit: 'Изменить',
         delete: 'Удалить',
+        form: {
+          name: 'Название',
+        },
       }
     },
   },
