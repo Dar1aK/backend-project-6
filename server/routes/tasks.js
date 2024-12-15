@@ -1,11 +1,6 @@
 import i18next from 'i18next';
-import Rollbar from 'rollbar';
+import { rollbarError } from '../helpers/rollbar.js'
 
-var rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_TOKEN,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
 
 export default (app) => {
   const checkAuth = (req, reply) => {
@@ -56,7 +51,7 @@ export default (app) => {
         const users = await app.objection.models.user.query();
         reply.render('tasks/index', { tasks, statuses, users, labels, filters });
       } catch (error) {
-        rollbar.log('GET tasks error', error);
+        rollbarError('GET tasks error', error);
         console.log('ERROR', error)
         const users = await app.objection.models.user.query();
         reply.render('tasks/index', { users, filters: {}, labels: [], statuses: [], tasks: [] });
@@ -98,7 +93,7 @@ export default (app) => {
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
       } catch (error) {
-        rollbar.log('POST tasks error', error);
+        rollbarError('POST tasks error', error);
         req.flash('error', i18next.t('flash.tasks.create.error'));
         const statuses = await app.objection.models.taskStatus.query();
         const labels = await app.objection.models.label.query();
@@ -121,7 +116,7 @@ export default (app) => {
         const users = await app.objection.models.user.query();
         reply.render('/tasks/edit', { task, id, statuses, users, labels });
       } catch (error) {
-        rollbar.log('GET task edit error', error);
+        rollbarError('GET task edit error', error);
         req.flash('error', i18next.t('flash.tasks.delete.error'));
         reply.redirect(app.reverse('tasks'));
       }
@@ -138,7 +133,7 @@ export default (app) => {
         console.log('task card', task, 'objects', task.label, 'ids',task.labels)
         reply.render('/tasks/card', { task, id });
       } catch (error) {
-        rollbar.log('GET task card error', error);
+        rollbarError('GET task card error', error);
         req.flash('error', i18next.t('flash.tasks.delete.error'));
         reply.redirect(app.reverse('tasks'));
       }
@@ -163,7 +158,7 @@ export default (app) => {
         await app.objection.models.task.query().deleteById(id);
         req.flash('info', i18next.t('flash.tasks.delete.success'));
       } catch (error) {
-        rollbar.log('DELETE task error', error);
+        rollbarError('DELETE task error', error);
         req.flash('error', i18next.t('flash.tasks.delete.error'));
       }
       reply.redirect(app.reverse('tasks'));
@@ -190,7 +185,7 @@ export default (app) => {
         req.flash('info', i18next.t('flash.tasks.edit.success'));
         reply.redirect(app.reverse('tasks'));
       } catch (error) {
-        rollbar.log('PATCH task error', error);
+        rollbarError('PATCH task error', error);
         req.flash('error', i18next.t('flash.tasks.edit.error'));
         const statuses = await app.objection.models.taskStatus.query();
         const labels = await app.objection.models.label.query();

@@ -1,11 +1,6 @@
 import i18next from 'i18next';
-import Rollbar from 'rollbar';
 
-var rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_TOKEN,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
+import { rollbarError } from '../helpers/rollbar.js'
 
 export default (app) => {
   app
@@ -28,7 +23,7 @@ export default (app) => {
         req.flash('info', i18next.t('flash.labels.create.success'));
         reply.redirect(app.reverse('labels'));
       } catch (error) {
-        rollbar.log('POST label error', error);
+        rollbarError('POST label error', error);
         req.flash('error', i18next.t('flash.labels.create.error'));
         reply.render('labels/new', { label, errors: error && error.data });
       }
@@ -42,7 +37,7 @@ export default (app) => {
         const label = await app.objection.models.label.query().findById(id);
         reply.render('/labels/edit', { label, id });
       } catch (error) {
-        rollbar.log('GET label edit error', error);
+        rollbarError('GET label edit error', error);
         req.flash('error', i18next.t('flash.label.delete.error'));
         reply.redirect(app.reverse('labels'));
       }
@@ -56,7 +51,7 @@ export default (app) => {
         await app.objection.models.label.query().deleteById(id);
         req.flash('info', i18next.t('flash.labels.delete.success'));
       } catch (error) {
-        rollbar.log('DELETE label error', error);
+        rollbarError('DELETE label error', error);
         req.flash('error', i18next.t('flash.labels.delete.error'));
       }
 
@@ -80,7 +75,7 @@ export default (app) => {
         req.flash('labels', i18next.t('flash.labels.edit.success'));
         reply.redirect(app.reverse('labels'));
       } catch (error) {
-        rollbar.log('PATCH label error', error);
+        rollbarError('PATCH label error', error);
         req.flash('error', i18next.t('flash.labels.edit.error'));
         reply.render('/labels/edit', { label, errors: error && error.data, id })
       }

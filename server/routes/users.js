@@ -1,11 +1,6 @@
 import i18next from 'i18next';
-import Rollbar from 'rollbar';
+import { rollbarError } from '../helpers/rollbar.js'
 
-var rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_TOKEN,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
 
 export default (app) => {
   app
@@ -28,7 +23,7 @@ export default (app) => {
         req.flash('info', i18next.t('flash.users.create.success'));
         reply.redirect(app.reverse('root'));
       } catch (error) {
-        rollbar.log('POST user error', error);
+        rollbarError('POST user error', error);
         req.flash('error', i18next.t('flash.users.create.error'));
         reply.render('users/new', { user, errors: error && error.data });
       }
@@ -96,7 +91,7 @@ export default (app) => {
         req.flash('info', i18next.t('flash.users.edit.success'));
         reply.redirect(app.reverse('users'));
       } catch (error) {
-        rollbar.log('PATCH user error', error);
+        rollbarError('PATCH user error', error);
         req.flash('error', i18next.t('flash.users.edit.error'));
         reply.render('/users/edit', { user, errors: error && error.data })
       }

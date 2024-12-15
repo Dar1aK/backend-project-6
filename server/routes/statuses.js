@@ -1,11 +1,6 @@
 import i18next from 'i18next';
-import Rollbar from 'rollbar';
+import { rollbarError } from '../helpers/rollbar.js'
 
-var rollbar = new Rollbar({
-  accessToken: process.env.ROLLBAR_TOKEN,
-  captureUncaught: true,
-  captureUnhandledRejections: true,
-});
 
 export default (app) => {
   const checkAuth = (req, reply) => {
@@ -45,7 +40,7 @@ export default (app) => {
         req.flash('info', i18next.t('flash.statuses.create.success'));
         reply.redirect(app.reverse('statuses'));
       } catch (error) {
-        rollbar.log('POST statuses error', error);
+        rollbarError('POST statuses error', error);
         req.flash('error', i18next.t('flash.statuses.create.error'));
         reply.render('statuses/new', { status, errors: error && error.data });
       }
@@ -62,7 +57,7 @@ export default (app) => {
         const status = await app.objection.models.taskStatus.query().findById(id);
         reply.render('/statuses/edit', { status, id });
       } catch (error) {
-        rollbar.log('GET status edit error', error);
+        rollbarError('GET status edit error', error);
         req.flash('error', i18next.t('flash.statuses.delete.error'));
         reply.redirect(app.reverse('statuses'));
       }
@@ -86,7 +81,7 @@ export default (app) => {
         await app.objection.models.taskStatus.query().deleteById(id);
         req.flash('info', i18next.t('flash.statuses.delete.success'));
       } catch (error) {
-        rollbar.log('DELETE status error', error);
+        rollbarError('DELETE status error', error);
         req.flash('error', i18next.t('flash.statuses.delete.error'));
       }
       reply.redirect(app.reverse('statuses'));
@@ -113,7 +108,7 @@ export default (app) => {
         req.flash('info', i18next.t('flash.statuses.edit.success'));
         reply.redirect(app.reverse('statuses'));
       } catch (error) {
-        rollbar.log('PATCH status error', error);
+        rollbarError('PATCH status error', error);
         req.flash('error', i18next.t('flash.statuses.edit.error'));
         reply.render('/statuses/edit', { status, errors: error && error.data })
       }
