@@ -153,7 +153,7 @@ export default {
         label: 'Метки',
         new: {
           submit: 'Сохранить',
-          signUp: 'Регистрация',
+          title: 'Создать задачу',
         },
         edit: {
           title: 'Изменение задачи',
