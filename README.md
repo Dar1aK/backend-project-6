@@ -14,5 +14,17 @@ make build
 ### Run
 
 ```bash
-$ make start
+make start
+```
+
+### Setup
+
+```bash
+make setup
+```
+
+### Test
+
+```bash
+make test
 ```
