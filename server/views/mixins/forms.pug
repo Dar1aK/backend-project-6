@@ -55,7 +55,7 @@ mixin select(entity, propertyName, valueName, label, options = [], errors = {})
     )&attributes(attributes)
       option
       each opt in options
-        option(value=opt.id, selected=(val == opt.id ? 'selected' : false))= opt[valueName]
+        option(value=opt.id, selected=(val == opt.id ? 'selected' : false))= `${valueName.map((name) => opt[name]).join(' ')}`
     if !_.isEmpty(propertyErrors)
       .invalid-feedback= propertyErrors.map(({ message }) => message).join('. ')
 

@@ -23,7 +23,7 @@ block content
               select.form-select#data_executor(name="executor")
                 option
                 each user in users
-                  option(value=user.id, selected=(filters.executor == user.id ? 'selected' : false))= user.email
+                  option(value=user.id, selected=(filters.executor == user.id ? 'selected' : false))= `${user.firstName} ${user.lastName}`
           .col-12.col-md
             .input-group.mb-3
               label.input-group-text(for="data_labels")= t('views.tasks.label')
