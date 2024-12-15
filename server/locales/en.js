@@ -94,6 +94,7 @@ export default {
       },
       users: {
         id: 'ID',
+        fullName: 'Fullname',
         email: 'Email',
         createdAt: 'Created at',
         actions: 'Actions',
