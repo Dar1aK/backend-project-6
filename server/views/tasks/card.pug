@@ -11,7 +11,9 @@ block content
     .col-12.col-md-4.border-start.px-3.order-1.order-md-2.mb-3.mb-md-0
       .mb-2
         span.me-1.badge.bg-danger.text-white= task.status && task.status.name
-        span.me-1.badge.bg-info.text-white= task.label && task.label.name
+          if task.label
+            each lab in task.label
+              span.me-1.badge.bg-info.text-white= lab
       .d-flex.flex-wrap.mb-3
         span.text-muted.me-2= t('views.tasks.creatorId')
         span= task.creator && `${task.creator.firstName} ${task.creator.lastName}`
