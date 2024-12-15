@@ -66,7 +66,7 @@ export default {
         delete: {
           error: 'Fail to delete',
           success: 'Label deleted successfully',
-        }
+        },
       },
       authError: 'Access denied! Please login',
     },

@@ -38,7 +38,7 @@ export default (app) => {
         reply.render('/labels/edit', { label, id });
       } catch (error) {
         rollbarError('GET label edit error', error);
-        req.flash('error', i18next.t('flash.label.delete.error'));
+        req.flash('error', i18next.t('flash.labels.delete.error'));
         reply.redirect(app.reverse('labels'));
       }
 
@@ -71,8 +71,7 @@ export default (app) => {
 
           return value.$query().patch(validLabel)
       })
-
-        req.flash('labels', i18next.t('flash.labels.edit.success'));
+        req.flash('success', i18next.t('flash.labels.edit.success'));
         reply.redirect(app.reverse('labels'));
       } catch (error) {
         rollbarError('PATCH label error', error);
