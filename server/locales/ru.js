@@ -138,7 +138,7 @@ export default {
         edit: 'Изменить',
         delete: 'Удалить',
         form: {
-          name: 'Название',
+          name: 'Наименование',
         },
       },
       tasks: {
@@ -165,7 +165,7 @@ export default {
         },
         myOnly: 'Только мои задачи',
         form: {
-          name: 'Название',
+          name: 'Наименование',
           description: 'Описание',
           statusId: 'Статус',
           email: 'Email',
@@ -189,7 +189,7 @@ export default {
         edit: 'Изменить',
         delete: 'Удалить',
         form: {
-          name: 'Название',
+          name: 'Наименование',
         },
       }
     },
