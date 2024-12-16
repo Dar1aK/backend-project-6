@@ -34,7 +34,7 @@ export default (app) => {
         }
 
         if (filters.labels) {
-          tasks.skipUndefined().where('labels', filters.labels)
+          tasks.where({ labelsId: filters.labels })
         }
 
         if (filters.isCreatorUser === 'on') {
