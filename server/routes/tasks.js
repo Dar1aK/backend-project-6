@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import rollbarError  from '../helpers/rollbar.js';
 
-
 export default (app) => {
   const checkAuth = (req, reply) => {
     req.flash('error', i18next.t('flash.authError'));
