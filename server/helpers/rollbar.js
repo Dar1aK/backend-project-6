@@ -6,4 +6,6 @@ var rollbar = new Rollbar({
   captureUnhandledRejections: true,
 });
 
-export const rollbarError = (label, error) => process.env.NODE_ENV !== 'test' && rollbar.log(label, error);
+const rollbarError = (label, error) => process.env.NODE_ENV !== 'test' && rollbar.log(label, error);
+
+export default rollbarError;

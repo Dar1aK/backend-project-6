@@ -3,7 +3,9 @@ import fastify from 'fastify';
 
 import init from '../server/plugin.js';
 import encrypt from '../server/lib/secure.cjs';
-import { getTestData, prepareData } from './helpers/index.js';
+import {
+  getTestData, prepareData, 
+} from './helpers/index.js';
 
 describe('test users CRUD', () => {
   let app;
@@ -14,7 +16,9 @@ describe('test users CRUD', () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: 'pino-pretty' },
+      logger: {
+        target: 'pino-pretty', 
+      },
     });
     await init(app);
     knex = app.objection.knex;
@@ -63,7 +67,9 @@ describe('test users CRUD', () => {
       ..._.omit(params, 'password'),
       passwordDigest: encrypt(params.password),
     };
-    const user = await models.user.query().findOne({ email: params.email });
+    const user = await models.user.query().findOne({
+      email: params.email, 
+    });
     expect(user).toMatchObject(expected);
   });
 
@@ -82,7 +88,9 @@ describe('test users CRUD', () => {
       ..._.omit(params, 'password'),
       passwordDigest: encrypt(params.password),
     };
-    const user = await models.user.query().findOne({ email: params.email });
+    const user = await models.user.query().findOne({
+      email: params.email, 
+    });
     expect(user).toMatchObject(expected);
   });
 

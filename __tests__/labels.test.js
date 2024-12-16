@@ -1,8 +1,9 @@
-import _ from 'lodash';
 import fastify from 'fastify';
 
 import init from '../server/plugin.js';
-import { getTestData, prepareData } from './helpers/index.js';
+import {
+  getTestData, prepareData,
+} from './helpers/index.js';
 
 describe('test labels CRUD', () => {
   let app;
@@ -13,7 +14,9 @@ describe('test labels CRUD', () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: 'pino-pretty' },
+      logger: {
+        target: 'pino-pretty',
+      },
     });
     await init(app);
     knex = app.objection.knex;
@@ -57,7 +60,9 @@ describe('test labels CRUD', () => {
     expect(response.statusCode).toBe(302);
 
     const expected = params;
-    const label = await models.label.query().findOne({ name: params.name });
+    const label = await models.label.query().findOne({
+      name: params.name,
+    });
     expect(label).toMatchObject(expected);
   });
 
@@ -74,7 +79,9 @@ describe('test labels CRUD', () => {
     expect(response.statusCode).toBe(302);
 
     const expected = params;
-    const label = await models.label.query().findOne({ name: params.name });
+    const label = await models.label.query().findOne({
+      name: params.name,
+    });
     expect(label).toMatchObject(expected);
   });
 

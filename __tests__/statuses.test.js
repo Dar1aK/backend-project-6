@@ -1,8 +1,9 @@
-import _ from 'lodash';
 import fastify from 'fastify';
 
 import init from '../server/plugin.js';
-import { getTestData, prepareData } from './helpers/index.js';
+import {
+  getTestData, prepareData,
+} from './helpers/index.js';
 
 describe('test statuses CRUD', () => {
   let app;
@@ -14,7 +15,9 @@ describe('test statuses CRUD', () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: 'pino-pretty' },
+      logger: {
+        target: 'pino-pretty',
+      },
     });
     await init(app);
     knex = app.objection.knex;
@@ -46,9 +49,14 @@ describe('test statuses CRUD', () => {
 
     expect(responseSignIn.statusCode).toBe(302);
     //auth
+
     const [sessionCookie] = responseSignIn.cookies;
-    const { name, value } = sessionCookie;
-    cookie = { [name]: value };
+    const {
+      name, value,
+    } = sessionCookie;
+    cookie = {
+      [name]: value,
+    };
   });
 
   it('index', async () => {
@@ -86,7 +94,9 @@ describe('test statuses CRUD', () => {
     const expected = params;
     const status = await models.taskStatus
       .query()
-      .findOne({ name: params.name });
+      .findOne({
+        name: params.name,
+      });
     expect(status).toMatchObject(expected);
   });
 
@@ -106,7 +116,9 @@ describe('test statuses CRUD', () => {
     const expected = params;
     const status = await models.taskStatus
       .query()
-      .findOne({ name: params.name });
+      .findOne({
+        name: params.name,
+      });
     expect(status).toMatchObject(expected);
   });
 

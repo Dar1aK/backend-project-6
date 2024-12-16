@@ -1,8 +1,9 @@
-import _ from 'lodash';
 import fastify from 'fastify';
 
 import init from '../server/plugin.js';
-import { getTestData, prepareData } from './helpers/index.js';
+import {
+  getTestData, prepareData,
+} from './helpers/index.js';
 
 describe('test tasks CRUD', () => {
   let app;
@@ -14,7 +15,9 @@ describe('test tasks CRUD', () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: 'pino-pretty' },
+      logger: {
+        target: 'pino-pretty',
+      },
     });
     await init(app);
     knex = app.objection.knex;
@@ -46,9 +49,14 @@ describe('test tasks CRUD', () => {
 
     expect(responseSignIn.statusCode).toBe(302);
     //auth
+
     const [sessionCookie] = responseSignIn.cookies;
-    const { name, value } = sessionCookie;
-    cookie = { [name]: value };
+    const {
+      name, value,
+    } = sessionCookie;
+    cookie = {
+      [name]: value,
+    };
   });
 
   it('index', async () => {
@@ -101,7 +109,9 @@ describe('test tasks CRUD', () => {
     expect(response.statusCode).toBe(302);
 
     const expected = params;
-    const task = await models.task.query().findOne({ name: params.name });
+    const task = await models.task.query().findOne({
+      name: params.name,
+    });
     expect(task).toMatchObject(expected);
   });
 
@@ -119,7 +129,9 @@ describe('test tasks CRUD', () => {
     expect(response.statusCode).toBe(302);
 
     const expected = params;
-    const task = await models.task.query().findOne({ name: params.name });
+    const task = await models.task.query().findOne({
+      name: params.name,
+    });
     expect(task).toMatchObject(expected);
   });
 
@@ -160,7 +172,7 @@ describe('test tasks CRUD', () => {
     expect(filteredTasks.statusCode).toBe(200);
 
     const allTasks = await models.task.query();
-    const regexTestId = /(data-testid=\'task-element\')/g;
+    const regexTestId = /(data-testid="task-element")/g;
 
     expect(filteredTasks.payload.match(regexTestId).length).toBe(1);
 
@@ -190,7 +202,7 @@ describe('test tasks CRUD', () => {
     expect(filteredTasks.statusCode).toBe(200);
 
     const allTasks = await models.task.query();
-    const regexTestId = /(data-testid=\'task-element\')/g;
+    const regexTestId = /(data-testid="task-element")/g;
 
     expect(filteredTasks.payload.match(regexTestId).length).toBe(1);
 

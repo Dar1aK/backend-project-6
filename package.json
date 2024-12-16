@@ -25,6 +25,7 @@
     "fastify-method-override": "^1.5.10",
     "fastify-objectionjs": "^1.0.0",
     "fastify-reverse-routes": "^3.0.0",
+    "globals": "^15.13.0",
     "heroku": "^9.5.0",
     "i18next": "^24.0.2",
     "lodash": "^4.17.21",

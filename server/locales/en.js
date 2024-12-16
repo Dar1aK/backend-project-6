@@ -133,9 +133,6 @@ export default {
           title: 'Creating status',
           submit: 'Create',
         },
-        edit: {
-          title: 'Edit status',
-        },
         submit: 'Save',
         edit: 'Edit',
         delete: 'Delete',

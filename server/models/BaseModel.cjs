@@ -1,4 +1,6 @@
-const { Model } = require('objection');
+const {
+  Model, 
+} = require('objection');
 
 module.exports = class BaseModel extends Model {
   static get modelPaths() {

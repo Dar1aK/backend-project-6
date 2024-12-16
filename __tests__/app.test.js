@@ -1,4 +1,6 @@
-import { describe, beforeAll, it, expect } from '@jest/globals';
+import {
+  describe, beforeAll, it, expect, 
+} from '@jest/globals';
 
 import fastify from 'fastify';
 import init from '../server/plugin.js';
@@ -9,7 +11,9 @@ describe('requests', () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: 'pino-pretty' },
+      logger: {
+        target: 'pino-pretty', 
+      },
     });
     await init(app);
   });

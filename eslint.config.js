@@ -2,7 +2,9 @@ import globals from 'globals';
 
 export default [
   {
-    languageOptions: { globals: globals.node },
+    languageOptions: {
+      globals: globals.node, 
+    },
     rules: {
       indent: ['error', 2],
       semi: 'error',
@@ -21,9 +23,9 @@ export default [
       'block-spacing': 'error',
       'object-curly-spacing': ['error', 'always'],
       'function-paren-newline': ['error', 'multiline'],
-      indent: ['error', 2],
       'comma-dangle': ['error', 'always-multiline'],
       'linebreak-style': ['error', 'unix'],
+      'object-curly-newline': ['error', 'always'],
     },
   },
 ];

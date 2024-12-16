@@ -1,6 +1,6 @@
 import i18next from 'i18next';
-import _ from 'lodash';
-import { rollbarError } from '../helpers/rollbar.js';
+import rollbarError  from '../helpers/rollbar.js';
+
 
 export default (app) => {
   const checkAuth = (req, reply) => {
@@ -9,7 +9,9 @@ export default (app) => {
     return reply;
   };
   app
-    .get('/tasks', { name: 'tasks' }, async (req, reply) => {
+    .get('/tasks', {
+      name: 'tasks',
+    }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         return checkAuth(req, reply);
       }
@@ -18,8 +20,11 @@ export default (app) => {
         const pairs = req.url.split('?')[1]?.split('&');
         return (pairs || []).reduce((acc, pair) => {
           const [name, value] = pair.split('=');
-          return { ...acc, [name]: value };
-        }, {});
+          return {
+            ...acc, [name]: value,
+          };
+        }, {
+        });
       })();
 
       try {
@@ -36,7 +41,9 @@ export default (app) => {
         }
 
         if (filters.labels) {
-          tasks.where({ labelsId: filters.labels });
+          tasks.where({
+            labelsId: filters.labels,
+          });
         }
 
         if (filters.isCreatorUser === 'on') {
@@ -61,7 +68,8 @@ export default (app) => {
         const users = await app.objection.models.user.query();
         reply.render('tasks/index', {
           users,
-          filters: {},
+          filters: {
+          },
           labels: [],
           statuses: [],
           tasks: [],
@@ -69,7 +77,9 @@ export default (app) => {
       }
       return reply;
     })
-    .get('/tasks/new', { name: 'newTask' }, async (req, reply) => {
+    .get('/tasks/new', {
+      name: 'newTask',
+    }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         return checkAuth(req, reply);
       }
@@ -78,7 +88,9 @@ export default (app) => {
       const statuses = await app.objection.models.taskStatus.query();
       const labels = await app.objection.models.label.query();
       const users = await app.objection.models.user.query();
-      reply.render('tasks/new', { task, statuses, users, labels });
+      reply.render('tasks/new', {
+        task, statuses, users, labels,
+      });
       return reply;
     })
     .post('/tasks', async (req, reply) => {
@@ -89,9 +101,7 @@ export default (app) => {
       const task = new app.objection.models.task();
       task.$set(req.body.data);
       try {
-        const validTask = await app.objection.models.task.fromJson(
-          req.body.data,
-        );
+        const validTask = await app.objection.models.task.fromJson(req.body.data);
         const labels = await app.objection.models.label
           .query()
           .skipUndefined()
@@ -101,8 +111,12 @@ export default (app) => {
           const insertedTask = await app.objection.models.task
             .query(trx)
             .insertGraph(
-              { ...validTask, labels: validTask.labels ? labels : [] },
-              { relate: ['labels'] },
+              {
+                ...validTask, labels: validTask.labels ? labels : [],
+              },
+              {
+                relate: ['labels'],
+              },
             );
           return insertedTask;
         });
@@ -126,12 +140,16 @@ export default (app) => {
 
       return reply;
     })
-    .get('/tasks/:id/edit', { name: 'editTasks' }, async (req, reply) => {
+    .get('/tasks/:id/edit', {
+      name: 'editTasks',
+    }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         return checkAuth(req, reply);
       }
 
-      const { id } = req.params;
+      const {
+        id,
+      } = req.params;
       try {
         const task = await app.objection.models.task
           .query()
@@ -140,7 +158,9 @@ export default (app) => {
         const statuses = await app.objection.models.taskStatus.query();
         const labels = await app.objection.models.label.query();
         const users = await app.objection.models.user.query();
-        reply.render('/tasks/edit', { task, id, statuses, users, labels });
+        reply.render('/tasks/edit', {
+          task, id, statuses, users, labels,
+        });
       } catch (error) {
         rollbarError('GET task edit error', error);
         req.flash('error', i18next.t('flash.tasks.delete.error'));
@@ -148,18 +168,24 @@ export default (app) => {
       }
       return reply;
     })
-    .get('/tasks/:id', { name: 'showTask' }, async (req, reply) => {
+    .get('/tasks/:id', {
+      name: 'showTask',
+    }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         return checkAuth(req, reply);
       }
 
-      const { id } = req.params;
+      const {
+        id,
+      } = req.params;
       try {
         const task = await app.objection.models.task
           .query()
           .findById(id)
           .withGraphJoined('[status, creator, executor, labels]');
-        reply.render('/tasks/card', { task, id });
+        reply.render('/tasks/card', {
+          task, id,
+        });
       } catch (error) {
         rollbarError('GET task card error', error);
         req.flash('error', i18next.t('flash.tasks.delete.error'));
@@ -173,11 +199,13 @@ export default (app) => {
       }
 
       const currentUserId = req?.user?.getUserId(req.user);
-      const { id } = req.params;
+      const {
+        id,
+      } = req.params;
 
       try {
         const task = await app.objection.models.task.query().findById(id);
-        if (task.creatorId != currentUserId) {
+        if (task.creatorId !== currentUserId) {
           req.flash('error', i18next.t('flash.tasks.delete.error'));
           reply.redirect(app.reverse('tasks'));
           return reply;
@@ -196,14 +224,14 @@ export default (app) => {
         return checkAuth(req, reply);
       }
 
-      const { id } = req.params;
+      const {
+        id,
+      } = req.params;
       const task = new app.objection.models.task();
       task.$set(req.body.data);
 
       try {
-        const validTask = await app.objection.models.task.fromJson(
-          req.body.data,
-        );
+        const validTask = await app.objection.models.task.fromJson(req.body.data);
         const labels = await app.objection.models.label
           .query()
           .skipUndefined()
@@ -218,7 +246,9 @@ export default (app) => {
                 id: Number(id),
                 labels: validTask.labels ? labels : [],
               },
-              { relate: ['labels'] },
+              {
+                relate: ['labels'],
+              },
             );
           return insertedTask;
         });

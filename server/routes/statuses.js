@@ -1,5 +1,6 @@
 import i18next from 'i18next';
-import { rollbarError } from '../helpers/rollbar.js';
+import rollbarError  from '../helpers/rollbar.js';
+
 
 export default (app) => {
   const checkAuth = (req, reply) => {
@@ -8,22 +9,30 @@ export default (app) => {
     return reply;
   };
   app
-    .get('/statuses', { name: 'statuses' }, async (req, reply) => {
+    .get('/statuses', {
+      name: 'statuses',
+    }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         return checkAuth(req, reply);
       }
 
       const statuses = await app.objection.models.taskStatus.query();
-      reply.render('statuses/index', { statuses });
+      reply.render('statuses/index', {
+        statuses,
+      });
       return reply;
     })
-    .get('/statuses/new', { name: 'newStatus' }, async (req, reply) => {
+    .get('/statuses/new', {
+      name: 'newStatus',
+    }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         return checkAuth(req, reply);
       }
 
       const status = new app.objection.models.taskStatus();
-      reply.render('statuses/new', { status });
+      reply.render('statuses/new', {
+        status,
+      });
       return reply;
     })
     .post('/statuses', async (req, reply) => {
@@ -34,31 +43,37 @@ export default (app) => {
       const status = new app.objection.models.taskStatus();
       status.$set(req.body.data);
       try {
-        const validStatus = await app.objection.models.taskStatus.fromJson(
-          req.body.data,
-        );
+        const validStatus = await app.objection.models.taskStatus.fromJson(req.body.data);
         await app.objection.models.taskStatus.query().insert(validStatus);
         req.flash('info', i18next.t('flash.statuses.create.success'));
         reply.redirect(app.reverse('statuses'));
       } catch (error) {
         rollbarError('POST statuses error', error);
         req.flash('error', i18next.t('flash.statuses.create.error'));
-        reply.render('statuses/new', { status, errors: error && error.data });
+        reply.render('statuses/new', {
+          status, errors: error && error.data,
+        });
       }
 
       return reply;
     })
-    .get('/statuses/:id/edit', { name: 'editStatus' }, async (req, reply) => {
+    .get('/statuses/:id/edit', {
+      name: 'editStatus',
+    }, async (req, reply) => {
       if (!req.isAuthenticated()) {
         return checkAuth(req, reply);
       }
 
-      const { id } = req.params;
+      const {
+        id,
+      } = req.params;
       try {
         const status = await app.objection.models.taskStatus
           .query()
           .findById(id);
-        reply.render('/statuses/edit', { status, id });
+        reply.render('/statuses/edit', {
+          status, id,
+        });
       } catch (error) {
         rollbarError('GET status edit error', error);
         req.flash('error', i18next.t('flash.statuses.delete.error'));
@@ -71,7 +86,9 @@ export default (app) => {
         return checkAuth(req, reply);
       }
 
-      const { id } = req.params;
+      const {
+        id,
+      } = req.params;
       const isTasksConnectedWithStatus = await app.objection.models.task
         .query()
         .where('statusId', id);
@@ -96,14 +113,14 @@ export default (app) => {
         return checkAuth(req, reply);
       }
 
-      const { id } = req.params;
+      const {
+        id,
+      } = req.params;
       const status = new app.objection.models.taskStatus();
       status.$set(req.body.data);
 
       try {
-        const validStatus = await app.objection.models.taskStatus.fromJson(
-          req.body.data,
-        );
+        const validStatus = await app.objection.models.taskStatus.fromJson(req.body.data);
         await app.objection.models.taskStatus
           .query()
           .where('id', id)
@@ -121,7 +138,9 @@ export default (app) => {
       } catch (error) {
         rollbarError('PATCH status error', error);
         req.flash('error', i18next.t('flash.statuses.edit.error'));
-        reply.render('/statuses/edit', { status, errors: error && error.data });
+        reply.render('/statuses/edit', {
+          status, errors: error && error.data,
+        });
       }
 
       return reply;

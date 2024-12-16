@@ -11,14 +11,14 @@ export default (app) => ({
   _,
   getAlertClass(type) {
     switch (type) {
-      case 'error':
-        return 'danger';
-      case 'success':
-        return 'success';
-      case 'info':
-        return 'info';
-      default:
-        throw new Error(`Unknown flash type: '${type}'`);
+    case 'error':
+      return 'danger';
+    case 'success':
+      return 'success';
+    case 'info':
+      return 'info';
+    default:
+      throw new Error(`Unknown flash type: '${type}'`);
     }
   },
   formatDate(str) {

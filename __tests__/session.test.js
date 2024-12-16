@@ -1,6 +1,8 @@
 import fastify from 'fastify';
 import init from '../server/plugin.js';
-import { getTestData, prepareData } from './helpers/index.js';
+import {
+  getTestData, prepareData, 
+} from './helpers/index.js';
 
 describe('test session', () => {
   let app;
@@ -10,7 +12,9 @@ describe('test session', () => {
   beforeAll(async () => {
     app = fastify({
       exposeHeadRoutes: false,
-      logger: { target: 'pino-pretty' },
+      logger: {
+        target: 'pino-pretty', 
+      },
     });
     await init(app);
     knex = app.objection.knex;
@@ -40,8 +44,12 @@ describe('test session', () => {
     // они понадобятся для выполнения запросов на маршруты требующие
     // предварительную аутентификацию
     const [sessionCookie] = responseSignIn.cookies;
-    const { name, value } = sessionCookie;
-    const cookie = { [name]: value };
+    const {
+      name, value, 
+    } = sessionCookie;
+    const cookie = {
+      [name]: value, 
+    };
 
     const responseSignOut = await app.inject({
       method: 'DELETE',

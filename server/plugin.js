@@ -1,4 +1,6 @@
-import { fileURLToPath } from 'url';
+import {
+  fileURLToPath, 
+} from 'url';
 import path from 'path';
 import fastifyStatic from '@fastify/static';
 import fastifyView from '@fastify/view';
@@ -6,7 +8,9 @@ import fastifyFormbody from '@fastify/formbody';
 import fastifySecureSession from '@fastify/secure-session';
 import fastifyPassport from '@fastify/passport';
 import fastifySensible from '@fastify/sensible';
-import { plugin as fastifyReverseRoutes } from 'fastify-reverse-routes';
+import {
+  plugin as fastifyReverseRoutes, 
+} from 'fastify-reverse-routes';
 import fastifyMethodOverride from 'fastify-method-override';
 import fastifyObjectionjs from 'fastify-objectionjs';
 import qs from 'qs';
@@ -42,7 +46,9 @@ const setUpViews = (app) => {
   });
 
   app.decorateReply('render', function render(viewPath, locals) {
-    this.view(viewPath, { ...locals, reply: this });
+    this.view(viewPath, {
+      ...locals, reply: this, 
+    });
   });
 };
 
@@ -78,7 +84,9 @@ const addHooks = (app) => {
 const registerPlugins = async (app) => {
   await app.register(fastifySensible);
   await app.register(fastifyReverseRoutes);
-  await app.register(fastifyFormbody, { parser: qs.parse });
+  await app.register(fastifyFormbody, {
+    parser: qs.parse, 
+  });
   await app.register(fastifySecureSession, {
     secret: process.env.SESSION_KEY,
     cookie: {
@@ -86,20 +94,16 @@ const registerPlugins = async (app) => {
     },
   });
 
-  fastifyPassport.registerUserDeserializer((user) =>
-    app.objection.models.user.query().findById(user.id),
-  );
+  fastifyPassport.registerUserDeserializer((user) => app.objection.models.user.query().findById(user.id));
   fastifyPassport.registerUserSerializer((user) => Promise.resolve(user));
   fastifyPassport.use(new FormStrategy('form', app));
   await app.register(fastifyPassport.initialize());
   await app.register(fastifyPassport.secureSession());
   await app.decorate('fp', fastifyPassport);
-  app.decorate('authenticate', (...args) =>
-    fastifyPassport.authenticate('form', {
-      failureRedirect: app.reverse('root'),
-      failureFlash: i18next.t('flash.authError'),
-    })(...args),
-  );
+  app.decorate('authenticate', (...args) => fastifyPassport.authenticate('form', {
+    failureRedirect: app.reverse('root'),
+    failureFlash: i18next.t('flash.authError'),
+  })(...args));
 
   await app.register(fastifyMethodOverride);
   await app.register(fastifyObjectionjs, {
