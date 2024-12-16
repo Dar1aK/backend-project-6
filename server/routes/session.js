@@ -3,18 +3,18 @@ import i18next from 'i18next';
 export default (app) => {
   app
     .get('/session/new', {
-      name: 'newSession', 
+      name: 'newSession',
     }, (req, reply) => {
       const signInForm = {
       };
       reply.render('session/new', {
-        signInForm, 
+        signInForm,
       });
     })
     .post(
       '/session',
       {
-        name: 'session', 
+        name: 'session',
       },
       app.fp.authenticate('form', async (req, reply, err, user) => {
         if (err) {
@@ -24,11 +24,11 @@ export default (app) => {
           const signInForm = req.body.data;
           const errors = {
             email: [{
-              message: i18next.t('flash.session.create.error'), 
+              message: i18next.t('flash.session.create.error'),
             }],
           };
           reply.render('session/new', {
-            signInForm, errors, 
+            signInForm, errors,
           });
           return reply;
         }

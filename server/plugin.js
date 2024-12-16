@@ -1,5 +1,5 @@
 import {
-  fileURLToPath, 
+  fileURLToPath,
 } from 'url';
 import path from 'path';
 import fastifyStatic from '@fastify/static';
@@ -9,7 +9,7 @@ import fastifySecureSession from '@fastify/secure-session';
 import fastifyPassport from '@fastify/passport';
 import fastifySensible from '@fastify/sensible';
 import {
-  plugin as fastifyReverseRoutes, 
+  plugin as fastifyReverseRoutes,
 } from 'fastify-reverse-routes';
 import fastifyMethodOverride from 'fastify-method-override';
 import fastifyObjectionjs from 'fastify-objectionjs';
@@ -47,7 +47,7 @@ const setUpViews = (app) => {
 
   app.decorateReply('render', function render(viewPath, locals) {
     this.view(viewPath, {
-      ...locals, reply: this, 
+      ...locals, reply: this,
     });
   });
 };
@@ -85,7 +85,7 @@ const registerPlugins = async (app) => {
   await app.register(fastifySensible);
   await app.register(fastifyReverseRoutes);
   await app.register(fastifyFormbody, {
-    parser: qs.parse, 
+    parser: qs.parse,
   });
   await app.register(fastifySecureSession, {
     secret: process.env.SESSION_KEY,
@@ -116,7 +116,7 @@ export const options = {
   exposeHeadRoutes: false,
 };
 
-export default async (app, _options) => {
+export default async (app) => {
   await registerPlugins(app);
 
   await setupLocalization();

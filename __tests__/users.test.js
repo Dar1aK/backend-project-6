@@ -4,7 +4,7 @@ import fastify from 'fastify';
 import init from '../server/plugin.js';
 import encrypt from '../server/lib/secure.cjs';
 import {
-  getTestData, prepareData, 
+  getTestData, prepareData,
 } from './helpers/index.js';
 
 describe('test users CRUD', () => {
@@ -17,7 +17,7 @@ describe('test users CRUD', () => {
     app = fastify({
       exposeHeadRoutes: false,
       logger: {
-        target: 'pino-pretty', 
+        target: 'pino-pretty',
       },
     });
     await init(app);
@@ -68,7 +68,7 @@ describe('test users CRUD', () => {
       passwordDigest: encrypt(params.password),
     };
     const user = await models.user.query().findOne({
-      email: params.email, 
+      email: params.email,
     });
     expect(user).toMatchObject(expected);
   });
@@ -89,7 +89,7 @@ describe('test users CRUD', () => {
       passwordDigest: encrypt(params.password),
     };
     const user = await models.user.query().findOne({
-      email: params.email, 
+      email: params.email,
     });
     expect(user).toMatchObject(expected);
   });

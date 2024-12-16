@@ -48,7 +48,6 @@ describe('test tasks CRUD', () => {
     });
 
     expect(responseSignIn.statusCode).toBe(302);
-    //auth
 
     const [sessionCookie] = responseSignIn.cookies;
     const {
@@ -161,7 +160,6 @@ describe('test tasks CRUD', () => {
     });
 
     expect(responseNew2.statusCode).toBe(302);
-    //create new task
 
     const filteredTasks = await app.inject({
       method: 'GET',
@@ -191,7 +189,6 @@ describe('test tasks CRUD', () => {
     });
 
     expect(responseNew3.statusCode).toBe(302);
-    //create task
 
     const filteredTasks = await app.inject({
       method: 'GET',

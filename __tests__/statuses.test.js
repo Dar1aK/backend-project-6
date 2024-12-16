@@ -48,7 +48,6 @@ describe('test statuses CRUD', () => {
     });
 
     expect(responseSignIn.statusCode).toBe(302);
-    //auth
 
     const [sessionCookie] = responseSignIn.cookies;
     const {

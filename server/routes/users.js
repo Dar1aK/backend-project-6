@@ -1,6 +1,5 @@
 import i18next from 'i18next';
-import rollbarError  from '../helpers/rollbar.js';
-
+import rollbarError from '../helpers/rollbar.js';
 
 export default (app) => {
   app
@@ -74,7 +73,6 @@ export default (app) => {
       const isTasksConnectedWithUser = await app.objection.models.task
         .query()
         .where('executorId', `${currentUserId}`);
-        console.log('currentUserId', typeof currentUserId, typeof id)
       if (currentUserId.toString() === id) {
         req.logOut();
         await app.objection.models.user.query().deleteById(id);
@@ -86,6 +84,7 @@ export default (app) => {
       }
 
       reply.redirect(app.reverse('users'));
+      return reply;
     })
     .patch('/users/:id', async (req, reply) => {
       const {
