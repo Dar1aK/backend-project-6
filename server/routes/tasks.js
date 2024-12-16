@@ -84,12 +84,11 @@ export default (app) => {
         const insertedTask = await app.objection.models.task.transaction(async (trx) => {
           console.log('validTaskvalidTask', validTask, labels)
           const insertedTask = await app.objection.models.task.query(trx)
-            .insertGraph({ ...validTask, labels }, { relate: ['labels'] });
+            .insertGraph({ ...validTask, labels: validTask.labels ? labels : [] }, { relate: ['labels'] });
           return insertedTask;
         });
 
         console.log('POST insertedTask', insertedTask)
-        // await app.objection.models.task.query().insert(validTask);
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
       } catch (error) {
@@ -174,11 +173,11 @@ export default (app) => {
 
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
-        const labels = await app.objection.models.label.query().skipUndefined().findByIds(validTask.labels)
+        const labels = await app.objection.models.label.query().findByIds(validTask.labels)
 
         await app.objection.models.task.transaction(async (trx) => {
           const insertedTask = await app.objection.models.task.query(trx)
-            .upsertGraph({ ...validTask, id, labels }, { relate: ['labels'] });
+            .upsertGraph({ ...validTask, id, labels: validTask.labels ? labels : [] }, { relate: ['labels'] });
           return insertedTask;
         });
 
