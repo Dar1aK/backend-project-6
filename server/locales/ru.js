@@ -51,7 +51,7 @@ export default {
         },
         delete: {
           error: 'Не удалось удалить задачу',
-          success: 'Задача успешно удалёна',
+          success: 'Задача успешно удалена',
         },
       },
       labels: {
