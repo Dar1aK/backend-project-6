@@ -44,7 +44,6 @@ export default (app) => {
         }
 
         tasks = await tasks;
-        console.log('GET final task', tasks)
 
         const statuses = await app.objection.models.taskStatus.query();
         const labels = await app.objection.models.label.query();
@@ -52,7 +51,6 @@ export default (app) => {
         reply.render('tasks/index', { tasks, statuses, users, labels, filters });
       } catch (error) {
         rollbarError('GET tasks error', error);
-        console.log('ERROR', error)
         const users = await app.objection.models.user.query();
         reply.render('tasks/index', { users, filters: {}, labels: [], statuses: [], tasks: [] });
       }
@@ -82,13 +80,11 @@ export default (app) => {
         const labels = await app.objection.models.label.query().skipUndefined().findByIds(validTask.labels)
 
         const insertedTask = await app.objection.models.task.transaction(async (trx) => {
-          console.log('validTaskvalidTask', validTask, labels)
           const insertedTask = await app.objection.models.task.query(trx)
             .insertGraph({ ...validTask, labels: validTask.labels ? labels : [] }, { relate: ['labels'] });
           return insertedTask;
         });
 
-        console.log('POST insertedTask', insertedTask)
         req.flash('info', i18next.t('flash.tasks.create.success'));
         reply.redirect(app.reverse('tasks'));
       } catch (error) {
@@ -129,7 +125,6 @@ export default (app) => {
       const { id } = req.params;
       try {
         const task = await app.objection.models.task.query().findById(id).withGraphJoined('[status, creator, executor, labels]');
-        console.log('task card', task, 'objects', task.label, 'ids', task.labels)
         reply.render('/tasks/card', { task, id });
       } catch (error) {
         rollbarError('GET task card error', error);
@@ -173,11 +168,11 @@ export default (app) => {
 
       try {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
-        const labels = await app.objection.models.label.query().findByIds(validTask.labels)
+        const labels = await app.objection.models.label.query().skipUndefined().findByIds(validTask.labels)
 
         await app.objection.models.task.transaction(async (trx) => {
           const insertedTask = await app.objection.models.task.query(trx)
-            .upsertGraph({ ...validTask, id, labels: validTask.labels ? labels : [] }, { relate: ['labels'] });
+            .upsertGraph({ ...validTask, id: Number(id), labels: validTask.labels ? labels : [] }, { relate: ['labels'] });
           return insertedTask;
         });
 
