@@ -119,7 +119,8 @@ export const options = {
   exposeHeadRoutes: false,
 };
 
-export default async (app) => {
+// eslint-disable-next-line no-unused-vars
+export default async (app, _options) => {
   await registerPlugins(app);
 
   await setupLocalization();

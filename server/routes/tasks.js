@@ -27,30 +27,21 @@ export default (app) => {
       })();
 
       try {
-        let tasks = app.objection.models.task
-          .query()
-          .withGraphJoined('[status, creator, executor, labels]');
+        const currentUserId = req?.user?.getUserId(req.user);
 
-        if (filters.status) {
-          tasks.where('statusId', filters.status);
-        }
-
-        if (filters.executor) {
-          tasks.skipUndefined().where('executorId', filters.executor);
-        }
-
-        if (filters.labels) {
-          tasks.where({
-            labelsId: filters.labels,
+        const modifierFunc = (query) => {
+          query.where({
+            ...(filters.status ? { statusId: filters.status } : {}),
+            ...(filters.executor ? { executorId: filters.executor } : {}),
+            ...(filters.labels ? { labelsId: filters.labels } : {}),
+            ...(filters.isCreatorUser === 'on' ? { creatorId: currentUserId } : {}),
           });
         }
 
-        if (filters.isCreatorUser === 'on') {
-          const currentUserId = req?.user?.getUserId(req.user);
-          tasks.where('creatorId', currentUserId);
-        }
-
-        tasks = await tasks;
+        const tasks = await app.objection.models.task
+          .query()
+          .withGraphJoined('[status, creator, executor, labels]')
+          .modify(modifierFunc);
 
         const statuses = await app.objection.models.taskStatus.query();
         const labels = await app.objection.models.label.query();
