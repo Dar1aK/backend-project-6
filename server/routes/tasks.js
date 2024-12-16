@@ -205,7 +205,8 @@ export default (app) => {
 
       try {
         const task = await app.objection.models.task.query().findById(id);
-        if (task.creatorId !== currentUserId) {
+
+        if (task.creatorId !== currentUserId.toString()) {
           req.flash('error', i18next.t('flash.tasks.delete.error'));
           reply.redirect(app.reverse('tasks'));
           return reply;
