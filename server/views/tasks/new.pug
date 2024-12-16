@@ -7,9 +7,9 @@ block content
   +formFor()(action=route('tasks') method='post')
     input(id='data_creatorId' name='data[creatorId]' type='hidden' value=currentUserId)
     +input(task, 'name', t('views.tasks.form.name'),errors)(type="text")
-    +textarea(task, 'description', t('views.tasks.form.description'), error)
-    +select(task, 'statusId', ['name'], t('views.tasks.form.statusId'), statuses, error)
-    +select(task, 'executorId', ['firstName', 'lastName'], t('views.tasks.form.executorId'), users, error)
+    +textarea(task, 'description', t('views.tasks.form.description'), errors)
+    +select(task, 'statusId', ['name'], t('views.tasks.form.statusId'), statuses, errors)
+    +select(task, 'executorId', ['firstName', 'lastName'], t('views.tasks.form.executorId'), users, errors)
     .mb-3
       label(for="data_labels")= t('views.tasks.form.labels')
       select.form-control#data_labels(name="data[labels]" multiple="multiple")

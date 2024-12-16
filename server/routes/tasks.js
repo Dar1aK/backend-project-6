@@ -79,7 +79,7 @@ export default (app) => {
         const validTask = await app.objection.models.task.fromJson(req.body.data);
         const labels = await app.objection.models.label.query().skipUndefined().findByIds(validTask.labels)
 
-        const insertedTask = await app.objection.models.task.transaction(async (trx) => {
+        await app.objection.models.task.transaction(async (trx) => {
           const insertedTask = await app.objection.models.task.query(trx)
             .insertGraph({ ...validTask, labels: validTask.labels ? labels : [] }, { relate: ['labels'] });
           return insertedTask;
