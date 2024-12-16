@@ -26,8 +26,8 @@ block content
                   option(value=user.id, selected=(filters.executor == user.id ? 'selected' : false))= `${user.firstName} ${user.lastName}`
           .col-12.col-md
             .input-group.mb-3
-              label.input-group-text(for="data_labels")= t('views.tasks.label')
-              select.form-select#data_labels(name="labels")
+              label.input-group-text(for="data_label")= t('views.tasks.label')
+              select.form-select#data_label(name="labels")
                 option
                 each label in labels
                   option(value=label.id, selected=(filters.labels == label.id ? 'selected' : false))= label.name
