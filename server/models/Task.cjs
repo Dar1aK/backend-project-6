@@ -19,10 +19,10 @@ module.exports = class Task extends unique(BaseModel) {
         statusId: { type: 'string', minLength: 1 },
         creatorId: { type: 'string', minLength: 1 },
         // executorId: { type: 'string' },
-        // labelId: { "type": "array",  "items": { "type": "string" } },
+        // labelId: { 'type': 'array',  'items': { 'type': 'string' } },
       },
-      additionalProperties: true
-    }
+      additionalProperties: true,
+    };
   }
 
   static get relationMappings() {
@@ -35,24 +35,24 @@ module.exports = class Task extends unique(BaseModel) {
         modelClass: TaskStatus,
         join: {
           from: 'tasks.status_id',
-          to: 'task_statuses.id'
-        }
+          to: 'task_statuses.id',
+        },
       },
       executor: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
           from: 'tasks.executor_id',
-          to: 'users.id'
-        }
+          to: 'users.id',
+        },
       },
       creator: {
         relation: Model.BelongsToOneRelation,
         modelClass: User,
         join: {
           from: 'tasks.creator_id',
-          to: 'users.id'
-        }
+          to: 'users.id',
+        },
       },
       labels: {
         relation: Model.ManyToManyRelation,
@@ -61,11 +61,11 @@ module.exports = class Task extends unique(BaseModel) {
           from: 'tasks.id',
           through: {
             from: 'tasks_labels.tasks_id',
-            to: 'tasks_labels.labels_id'
+            to: 'tasks_labels.labels_id',
           },
-          to: 'labels.id'
-        }
-      }
+          to: 'labels.id',
+        },
+      },
     };
   }
-}
+};

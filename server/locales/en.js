@@ -21,10 +21,10 @@ export default {
           success: 'User changed successfully',
         },
         delete: {
-          error: 'You can\'t edit or delete another user',
-          deleteConnected: 'Can\'t edit or delete user',
+          error: 'You can't edit or delete another user',
+          deleteConnected: 'Can't edit or delete user',
           success: 'User deleted successfully',
-        }
+        },
       },
       statuses: {
         create: {
@@ -38,7 +38,7 @@ export default {
         delete: {
           error: 'Fail to delete',
           success: 'Status deleted successfully',
-        }
+        },
       },
       tasks: {
         create: {
@@ -52,7 +52,7 @@ export default {
         delete: {
           error: 'Fail to delete',
           success: 'Task deleted successfully',
-        }
+        },
       },
       labels: {
         create: {
@@ -89,8 +89,8 @@ export default {
         },
         form: {
           email: 'Email',
-          password: 'Password'
-        }
+          password: 'Password',
+        },
       },
       users: {
         id: 'ID',
@@ -109,11 +109,11 @@ export default {
           firstName: 'Firstname',
           lastName: 'Lastname',
           email: 'Email',
-          password: 'Password'
-        }
+          password: 'Password',
+        },
       },
       edit: {
-        submit: 'Edit'
+        submit: 'Edit',
       },
       welcome: {
         index: {
@@ -126,7 +126,7 @@ export default {
         id: 'ID',
         name: 'Name',
         createdAt: 'Created at',
-        create: "Create status",
+        create: 'Create status',
         actions: 'Actions',
         title: 'Statuses',
         new: {
@@ -140,14 +140,14 @@ export default {
         edit: 'Edit',
         delete: 'Delete',
         form: {
-          name: 'Name'
+          name: 'Name',
         },
       },
       tasks: {
         id: 'ID',
         name: 'Name',
         createdAt: 'Created at',
-        create: "Create task",
+        create: 'Create task',
         actions: 'Actions',
         title: 'Tasks',
         status: 'Status',
@@ -181,7 +181,7 @@ export default {
         id: 'ID',
         name: 'Name',
         createdAt: 'Created at',
-        create: "Create label",
+        create: 'Create label',
         actions: 'Actions',
         labels: 'Labels',
         title: 'Labels',
@@ -193,9 +193,9 @@ export default {
         edit: 'Edit',
         delete: 'Delete',
         form: {
-          name: 'Name'
+          name: 'Name',
         },
-      }
+      },
     },
   },
 };

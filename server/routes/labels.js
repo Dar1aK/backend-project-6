@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 
-import { rollbarError } from '../helpers/rollbar.js'
+import { rollbarError } from '../helpers/rollbar.js';
 
 export default (app) => {
   app
@@ -18,7 +18,9 @@ export default (app) => {
       label.$set(req.body.data);
 
       try {
-        const validLabel = await app.objection.models.label.fromJson(req.body.data);
+        const validLabel = await app.objection.models.label.fromJson(
+          req.body.data,
+        );
         await app.objection.models.label.query().insert(validLabel);
         req.flash('info', i18next.t('flash.labels.create.success'));
         reply.redirect(app.reverse('labels'));
@@ -63,20 +65,30 @@ export default (app) => {
       label.$set(req.body.data);
 
       try {
-        const validLabel = await app.objection.models.label.fromJson(req.body.data);
-        await app.objection.models.label.query().where('id', id).first().then(value => {
-          if(!value) {
-            throw Error('Label not found')
-          }
+        const validLabel = await app.objection.models.label.fromJson(
+          req.body.data,
+        );
+        await app.objection.models.label
+          .query()
+          .where('id', id)
+          .first()
+          .then((value) => {
+            if (!value) {
+              throw Error('Label not found');
+            }
 
-          return value.$query().patch(validLabel)
-        })
+            return value.$query().patch(validLabel);
+          });
         req.flash('success', i18next.t('flash.labels.edit.success'));
         reply.redirect(app.reverse('labels'));
       } catch (error) {
         rollbarError('PATCH label error', error);
         req.flash('error', i18next.t('flash.labels.edit.error'));
-        reply.render('/labels/edit', { label, errors: error && error.data, id })
+        reply.render('/labels/edit', {
+          label,
+          errors: error && error.data,
+          id,
+        });
       }
 
       return reply;

@@ -1,5 +1,5 @@
-export const up = (knex) => {
-  return Promise.all([
+export const up = (knex) =>
+  Promise.all([
     knex.schema.createTable('users', (table) => {
       table.increments('id').primary();
       table.string('email');
@@ -31,20 +31,18 @@ export const up = (knex) => {
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
     }),
-    knex.schema.createTable('tasks_labels', table => {
+    knex.schema.createTable('tasks_labels', (table) => {
       table.increments('id').primary();
       table.integer('tasks_id').references('tasks.id');
       table.integer('labels_id').references('labels.id');
-    })
-  ])
-};
+    }),
+  ]);
 
-export const down = (knex) => {
-  return Promise.all([
+export const down = (knex) =>
+  Promise.all([
     knex.schema.dropTable('users'),
     knex.schema.dropTable('task_statuses'),
     knex.schema.dropTable('tasks'),
     knex.schema.dropTable('labels'),
-    knex.schema.dropTable('tasks_labels')
-  ])
-};
+    knex.schema.dropTable('tasks_labels'),
+  ]);

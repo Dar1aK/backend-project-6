@@ -12,28 +12,28 @@ block content
         .row
           .col-12.col-md
             .input-group.mb-3
-              label.input-group-text(for="data_status")= t('views.tasks.status')
-              select.form-select#data_status(name="status")
+              label.input-group-text(for='data_status')= t('views.tasks.status')
+              select.form-select#data_status(name='status')
                 option
                 each status in statuses
                   option(value=status.id, selected=(filters.status == status.id ? 'selected' : false))= status.name
           .col-12.col-md
             .input-group.mb-3
-              label.input-group-text(for="data_executor")= t('views.tasks.executorId')
-              select.form-select#data_executor(name="executor")
+              label.input-group-text(for='data_executor')= t('views.tasks.executorId')
+              select.form-select#data_executor(name='executor')
                 option
                 each user in users
                   option(value=user.id, selected=(filters.executor == user.id ? 'selected' : false))= `${user.firstName} ${user.lastName}`
           .col-12.col-md
             .input-group.mb-3
-              label.input-group-text(for="data_label")= t('views.tasks.label')
-              select.form-select#data_label(name="labels")
+              label.input-group-text(for='data_label')= t('views.tasks.label')
+              select.form-select#data_label(name='labels')
                 option
                 each label in labels
                   option(value=label.id, selected=(filters.labels == label.id ? 'selected' : false))= label.name
         .mb-3.form-check
-          input.form-check-input(id="data_isCreatorUser", type="checkbox", name="isCreatorUser", checked=(filters.isCreatorUser))
-          label.form-check-label(for="data_isCreatorUser")= t('views.tasks.myOnly')
+          input.form-check-input(id='data_isCreatorUser', type='checkbox', name='isCreatorUser', checked=(filters.isCreatorUser))
+          label.form-check-label(for='data_isCreatorUser')= t('views.tasks.myOnly')
         +submit(user)(value=t('views.tasks.buttons.submit'))
 
   table.table.table-striped
@@ -48,7 +48,7 @@ block content
         th= t('views.tasks.actions')
     tbody
       each task in tasks
-        tr(data-testid="task-element")
+        tr(data-testid='task-element')
           td= task.id
           td
             a(href=`/tasks/${task.id}`)= task.name
@@ -59,4 +59,4 @@ block content
           td
             .d-flex.flex-wrap
               a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`)= t('views.tasks.buttons.edit')
-              +buttonTo(`tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.buttons.delete'))
+              +buttonTo(`tasks/${task.id}`, 'delete')(class='btn btn-danger' value=t('views.tasks.buttons.delete'))

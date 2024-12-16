@@ -28,4 +28,4 @@ test:
 	npm test -s
 
 format:
-	npx prettier --write "**/*.js"
+	npx prettier --write '**/*.js'

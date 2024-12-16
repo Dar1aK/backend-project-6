@@ -5,13 +5,6 @@ import taskStatuses from './statuses.js';
 import tasks from './tasks.js';
 import labels from './labels.js';
 
-const controllers = [
-  welcome,
-  users,
-  session,
-  taskStatuses,
-  tasks,
-  labels,
-];
+const controllers = [welcome, users, session, taskStatuses, tasks, labels];
 
 export default (app) => controllers.forEach((f) => f(app));

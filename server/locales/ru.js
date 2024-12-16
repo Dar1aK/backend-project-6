@@ -24,7 +24,7 @@ export default {
           error: 'Вы не можете редактировать или удалять другого пользователя',
           deleteConnected: 'Не удалось удалить пользователя',
           success: 'Пользователь успешно удалён',
-        }
+        },
       },
       statuses: {
         create: {
@@ -66,7 +66,7 @@ export default {
         delete: {
           error: 'Не удалось удалить метку',
           success: 'Метка успешно удалена',
-        }
+        },
       },
       authError: 'Доступ запрещён! Пожалуйста, авторизируйтесь.',
     },
@@ -89,8 +89,8 @@ export default {
         },
         form: {
           email: 'Email',
-          password: 'Пароль'
-        }
+          password: 'Пароль',
+        },
       },
       users: {
         id: 'ID',
@@ -109,11 +109,11 @@ export default {
           firstName: 'Имя',
           lastName: 'Фамилия',
           email: 'Email',
-          password: 'Пароль'
-        }
+          password: 'Пароль',
+        },
       },
       edit: {
-        submit: 'Изменить'
+        submit: 'Изменить',
       },
       welcome: {
         index: {
@@ -126,7 +126,7 @@ export default {
         id: 'ID',
         name: 'Имя',
         createdAt: 'Дата создания',
-        create: "Создать статус",
+        create: 'Создать статус',
         actions: 'Действия',
         title: 'Статусы',
         new: {
@@ -179,13 +179,13 @@ export default {
         id: 'ID',
         name: 'Имя',
         createdAt: 'Дата создания',
-        create: "Создать метку",
+        create: 'Создать метку',
         actions: 'Действия',
         labels: 'Метки',
         title: 'Метки',
         new: {
           title: 'Создание метки',
-          submit: 'Создать'
+          submit: 'Создать',
         },
         editTitle: 'Изменение метки',
         submit: 'Сохранить',
@@ -194,7 +194,7 @@ export default {
         form: {
           name: 'Наименование',
         },
-      }
+      },
     },
   },
 };

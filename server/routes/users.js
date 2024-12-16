@@ -1,6 +1,5 @@
 import i18next from 'i18next';
-import { rollbarError } from '../helpers/rollbar.js'
-
+import { rollbarError } from '../helpers/rollbar.js';
 
 export default (app) => {
   app
@@ -18,7 +17,9 @@ export default (app) => {
       user.$set(req.body.data);
 
       try {
-        const validUser = await app.objection.models.user.fromJson(req.body.data);
+        const validUser = await app.objection.models.user.fromJson(
+          req.body.data,
+        );
         await app.objection.models.user.query().insert(validUser);
         req.flash('info', i18next.t('flash.users.create.success'));
         reply.redirect(app.reverse('root'));
@@ -32,7 +33,7 @@ export default (app) => {
     })
     .get('/users/:id/edit', { name: 'editUser' }, async (req, reply) => {
       const { id } = req.params;
-      const currentUserId = req?.user?.getUserId(req.user)
+      const currentUserId = req?.user?.getUserId(req.user);
 
       if (currentUserId == id) {
         const user = await app.objection.models.user.query().findById(id);
@@ -46,14 +47,16 @@ export default (app) => {
     })
     .delete('/users/:id', async (req, reply) => {
       const { id } = req.params;
-      const currentUserId = req?.user?.getUserId(req.user)
+      const currentUserId = req?.user?.getUserId(req.user);
       if (!currentUserId) {
         req.flash('error', i18next.t('flash.authError'));
         reply.redirect(app.reverse('root'));
-        return reply
+        return reply;
       }
 
-      const isTasksConnectedWithUser = await app.objection.models.task.query().where('executorId', `${currentUserId}`)
+      const isTasksConnectedWithUser = await app.objection.models.task
+        .query()
+        .where('executorId', `${currentUserId}`);
       if (currentUserId == id) {
         req.logOut();
         await app.objection.models.user.query().deleteById(id);
@@ -68,32 +71,38 @@ export default (app) => {
     })
     .patch('/users/:id', async (req, reply) => {
       const { id } = req.params;
-      const currentUserId = req?.user?.getUserId(req.user)
+      const currentUserId = req?.user?.getUserId(req.user);
       if (!currentUserId) {
         req.flash('error', i18next.t('flash.authError'));
         reply.redirect(app.reverse('root'));
-        return reply
+        return reply;
       }
 
       const user = new app.objection.models.user();
       user.$set(req.body.data);
 
       try {
-        const validUser = await app.objection.models.user.fromJson(req.body.data);
-        await app.objection.models.user.query().where('id', id).first().then(value => {
-          if(!value) {
-            throw Error('User not found')
-          }
+        const validUser = await app.objection.models.user.fromJson(
+          req.body.data,
+        );
+        await app.objection.models.user
+          .query()
+          .where('id', id)
+          .first()
+          .then((value) => {
+            if (!value) {
+              throw Error('User not found');
+            }
 
-          return value.$query().patch(validUser)
-        })
+            return value.$query().patch(validUser);
+          });
 
         req.flash('info', i18next.t('flash.users.edit.success'));
         reply.redirect(app.reverse('users'));
       } catch (error) {
         rollbarError('PATCH user error', error);
         req.flash('error', i18next.t('flash.users.edit.error'));
-        reply.render('/users/edit', { user, errors: error && error.data })
+        reply.render('/users/edit', { user, errors: error && error.data });
       }
 
       return reply;

@@ -1,60 +1,60 @@
 {
-  "users": {
-    "new": {
-      "firstName": "malika",
-      "lastName": "hodkiewicz",
-      "email": "malika_hodkiewicz75@live.com",
-      "password": "RLJvaIgPOnX5r03"
+  'users': {
+    'new': {
+      'firstName': 'malika',
+      'lastName': 'hodkiewicz',
+      'email': 'malika_hodkiewicz75@live.com',
+      'password': 'RLJvaIgPOnX5r03'
     },
-    "existing": {
-      "email": "lawrence.kulas87@outlook.com",
-      "password": "O6AvLIQL1cbzrre"
+    'existing': {
+      'email': 'lawrence.kulas87@outlook.com',
+      'password': 'O6AvLIQL1cbzrre'
     }
   },
-  "task_statuses": {
-    "new": {
-      "name": "status123"
+  'task_statuses': {
+    'new': {
+      'name': 'status123'
     },
-    "existing": {
-      "name": "status111"
+    'existing': {
+      'name': 'status111'
     }
   },
-  "tasks": {
-    "new": {
-      "name": "name123",
-      "description": "description123",
-      "statusId": "1",
-      "creatorId": "1",
-      "executorId": "1"
+  'tasks': {
+    'new': {
+      'name': 'name123',
+      'description': 'description123',
+      'statusId': '1',
+      'creatorId': '1',
+      'executorId': '1'
     },
-    "existing": {
-      "name": "name111",
-      "description": "description111",
-      "statusId": "1",
-      "creatorId": "1",
-      "executorId": "1"
+    'existing': {
+      'name': 'name111',
+      'description': 'description111',
+      'statusId': '1',
+      'creatorId': '1',
+      'executorId': '1'
     },
-    "new2": {
-      "name": "name321",
-      "description": "description321",
-      "statusId": "2",
-      "creatorId": "2",
-      "executorId": "2"
+    'new2': {
+      'name': 'name321',
+      'description': 'description321',
+      'statusId': '2',
+      'creatorId': '2',
+      'executorId': '2'
     },
-    "new3": {
-      "name": "name333",
-      "description": "description333",
-      "statusId": "2",
-      "creatorId": "1",
-      "executorId": "2"
+    'new3': {
+      'name': 'name333',
+      'description': 'description333',
+      'statusId': '2',
+      'creatorId': '1',
+      'executorId': '2'
     }
   },
-  "labels": {
-    "new": {
-      "name": "label123"
+  'labels': {
+    'new': {
+      'name': 'label123'
     },
-    "existing": {
-      "name": "label111"
+    'existing': {
+      'name': 'label111'
     }
   }
 }

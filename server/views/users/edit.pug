@@ -2,9 +2,9 @@ extends ../layouts/application.pug
 
 block content
   +formFor()(action=`/users/${currentUserId}` method='post')
-    +input(user, 'firstName', t('views.users.form.firstName'), errors)(type="text")
-    +input(user, 'lastName', t('views.users.form.lastName'), errors)(type="text")
-    +input(user, 'email', t('views.users.form.email'), errors)(type="text")
-    +input(user, 'password', t('views.users.form.password'), errors)(type="password")
-    input(name="_method" type="hidden" value='patch')
+    +input(user, 'firstName', t('views.users.form.firstName'), errors)(type='text')
+    +input(user, 'lastName', t('views.users.form.lastName'), errors)(type='text')
+    +input(user, 'email', t('views.users.form.email'), errors)(type='text')
+    +input(user, 'password', t('views.users.form.password'), errors)(type='password')
+    input(name='_method' type='hidden' value='patch')
     +submit(user)(value=t('views.edit.submit'))

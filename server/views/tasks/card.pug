@@ -25,4 +25,4 @@ block content
         span= formatDate(task.createdAt)
       .d-flex.flex-wrap
         a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`)= t('views.tasks.buttons.edit')
-        +buttonTo(`tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.buttons.delete'))
+        +buttonTo(`tasks/${task.id}`, 'delete')(class='btn btn-danger' value=t('views.tasks.buttons.delete'))

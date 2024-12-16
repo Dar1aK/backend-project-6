@@ -63,6 +63,6 @@ mixin submit(form = null)
   input(class='btn btn-primary' type='submit')&attributes(attributes)
 
 mixin buttonTo(action, method)
-  form(action=action, method="post")
-    input(name="_method" type="hidden" value=method)
+  form(action=action, method='post')
+    input(name='_method' type='hidden' value=method)
     input(type='submit')&attributes(attributes)

@@ -51,7 +51,6 @@ describe('test tasks CRUD', () => {
     cookie = { [name]: value };
   });
 
-
   it('index', async () => {
     const responseTasks = await app.inject({
       method: 'GET',
@@ -133,7 +132,6 @@ describe('test tasks CRUD', () => {
         data: params,
       },
       cookies: cookie,
-
     });
 
     expect(response.statusCode).toBe(302);
@@ -161,8 +159,8 @@ describe('test tasks CRUD', () => {
 
     expect(filteredTasks.statusCode).toBe(200);
 
-    const allTasks = await models.task.query()
-    const regexTestId = /(data-testid=\"task-element\")/g;
+    const allTasks = await models.task.query();
+    const regexTestId = /(data-testid=\'task-element\')/g;
 
     expect(filteredTasks.payload.match(regexTestId).length).toBe(1);
 
@@ -191,8 +189,8 @@ describe('test tasks CRUD', () => {
 
     expect(filteredTasks.statusCode).toBe(200);
 
-    const allTasks = await models.task.query()
-    const regexTestId = /(data-testid=\"task-element\")/g;
+    const allTasks = await models.task.query();
+    const regexTestId = /(data-testid=\'task-element\')/g;
 
     expect(filteredTasks.payload.match(regexTestId).length).toBe(1);
 

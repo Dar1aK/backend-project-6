@@ -51,7 +51,6 @@ describe('test statuses CRUD', () => {
     cookie = { [name]: value };
   });
 
-
   it('index', async () => {
     const responseStatuses = await app.inject({
       method: 'GET',
@@ -85,7 +84,9 @@ describe('test statuses CRUD', () => {
     expect(response.statusCode).toBe(302);
 
     const expected = params;
-    const status = await models.taskStatus.query().findOne({ name: params.name });
+    const status = await models.taskStatus
+      .query()
+      .findOne({ name: params.name });
     expect(status).toMatchObject(expected);
   });
 
@@ -103,7 +104,9 @@ describe('test statuses CRUD', () => {
     expect(response.statusCode).toBe(302);
 
     const expected = params;
-    const status = await models.taskStatus.query().findOne({ name: params.name });
+    const status = await models.taskStatus
+      .query()
+      .findOne({ name: params.name });
     expect(status).toMatchObject(expected);
   });
 
@@ -116,7 +119,6 @@ describe('test statuses CRUD', () => {
         data: params,
       },
       cookies: cookie,
-
     });
 
     expect(response.statusCode).toBe(302);
