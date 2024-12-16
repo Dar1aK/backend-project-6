@@ -21,8 +21,8 @@ export default {
           success: 'User changed successfully',
         },
         delete: {
-          error: 'You can't edit or delete another user',
-          deleteConnected: 'Can't edit or delete user',
+          error: 'You can\'t edit or delete another user',
+          deleteConnected: 'Can\'t edit or delete user',
           success: 'User deleted successfully',
         },
       },
