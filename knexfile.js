@@ -1,6 +1,6 @@
 import path from 'path';
 import {
-  fileURLToPath, 
+  fileURLToPath,
 } from 'url';
 import dotenv from 'dotenv';
 

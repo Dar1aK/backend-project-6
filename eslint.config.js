@@ -26,7 +26,7 @@ export default [
       'comma-dangle': ['error', 'always-multiline'],
       'linebreak-style': ['error', 'unix'],
       'object-curly-newline': ['error', 'always'],
-      'max-len': ['error', { 'code': 100 }],
+      'max-len': ['error', { code: 100 }],
     },
   },
 ];
