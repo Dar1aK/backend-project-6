@@ -48,7 +48,7 @@ export default (app) => {
       } = req.params;
       const currentUserId = req?.user?.getUserId(req.user);
 
-      if (currentUserId == id) {
+      if (currentUserId.toString() === id) {
         const user = await app.objection.models.user.query().findById(id);
         reply.render('/users/edit', {
           user,
@@ -74,12 +74,13 @@ export default (app) => {
       const isTasksConnectedWithUser = await app.objection.models.task
         .query()
         .where('executorId', `${currentUserId}`);
-      if (currentUserId == id) {
+        console.log('currentUserId', typeof currentUserId, typeof id)
+      if (currentUserId.toString() === id) {
         req.logOut();
         await app.objection.models.user.query().deleteById(id);
         req.flash('info', i18next.t('flash.users.delete.success'));
       } else if (isTasksConnectedWithUser && isTasksConnectedWithUser.length) {
-        req.flash('error', i18next.t('flash.users.deleteConnected.error'));
+        req.flash('error', i18next.t('flash.users.delete.deleteConnected'));
       } else {
         req.flash('error', i18next.t('flash.users.delete.error'));
       }
