@@ -1,5 +1,5 @@
 import {
-  describe, beforeAll, it, expect, 
+  describe, beforeAll, it, expect,
 } from '@jest/globals';
 
 import fastify from 'fastify';
@@ -12,7 +12,7 @@ describe('requests', () => {
     app = fastify({
       exposeHeadRoutes: false,
       logger: {
-        target: 'pino-pretty', 
+        target: 'pino-pretty',
       },
     });
     await init(app);

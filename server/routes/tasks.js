@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import rollbarError  from '../helpers/rollbar.js';
+import rollbarError from '../helpers/rollbar.js';
 
 export default (app) => {
   const checkAuth = (req, reply) => {
@@ -218,6 +218,7 @@ export default (app) => {
         req.flash('error', i18next.t('flash.tasks.delete.error'));
       }
       reply.redirect(app.reverse('tasks'));
+      return reply;
     })
     .patch('/tasks/:id', async (req, reply) => {
       if (!req.isAuthenticated()) {

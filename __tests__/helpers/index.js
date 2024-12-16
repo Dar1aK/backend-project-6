@@ -1,5 +1,5 @@
 import {
-  URL, 
+  URL,
 } from 'url';
 import fs from 'fs';
 import path from 'path';
@@ -16,7 +16,7 @@ export const getTestData = () => getFixtureData('testData.json');
 
 export const prepareData = async (app) => {
   const {
-    knex, 
+    knex,
   } = app.objection;
 
   // получаем данные из фикстур и заполняем БД

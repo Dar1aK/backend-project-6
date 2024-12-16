@@ -1,7 +1,7 @@
 import fastify from 'fastify';
 import init from '../server/plugin.js';
 import {
-  getTestData, prepareData, 
+  getTestData, prepareData,
 } from './helpers/index.js';
 
 describe('test session', () => {
@@ -13,7 +13,7 @@ describe('test session', () => {
     app = fastify({
       exposeHeadRoutes: false,
       logger: {
-        target: 'pino-pretty', 
+        target: 'pino-pretty',
       },
     });
     await init(app);
@@ -45,10 +45,10 @@ describe('test session', () => {
     // предварительную аутентификацию
     const [sessionCookie] = responseSignIn.cookies;
     const {
-      name, value, 
+      name, value,
     } = sessionCookie;
     const cookie = {
-      [name]: value, 
+      [name]: value,
     };
 
     const responseSignOut = await app.inject({
