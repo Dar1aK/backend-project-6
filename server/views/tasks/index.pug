@@ -46,7 +46,6 @@ block content
         th= t('views.tasks.executorId')
         th= t('views.tasks.createdAt')
         th= t('views.tasks.actions')
-        th= t('views.tasks.label')
     tbody
       each task in tasks
         tr(data-testid="task-element")
@@ -61,7 +60,3 @@ block content
             .d-flex.flex-wrap
               a.btn.btn-primary.me-1(href=`/tasks/${task.id}/edit`)= t('views.tasks.buttons.edit')
               +buttonTo(`tasks/${task.id}`, 'delete')(class="btn btn-danger" value=t('views.tasks.buttons.delete'))
-          //- td=task.label
-          //-   each lab in task.labels
-          //-     span=lab && lab.name
-

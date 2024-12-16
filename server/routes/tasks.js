@@ -23,7 +23,7 @@ export default (app) => {
       })()
 
       try {
-        let tasks = app.objection.models.task.query().withGraphJoined('[status, creator, executor, label]')
+        let tasks = app.objection.models.task.query().withGraphJoined('[status, creator, executor, labels]')
 
         if (filters.status) {
           tasks.where('statusId', filters.status)
@@ -33,9 +33,9 @@ export default (app) => {
           tasks.skipUndefined().where('executorId', filters.executor)
         }
 
-        // if (filters.labels) {
-        //   tasks.skipUndefined().where('labels', Number(filters.labels))
-        // }
+        if (filters.labels) {
+          tasks.skipUndefined().where('labels', filters.labels)
+        }
 
         if (filters.isCreatorUser === 'on') {
           const currentUserId = req?.user?.getUserId(req.user)
@@ -84,7 +84,7 @@ export default (app) => {
         const insertedTask = await app.objection.models.task.transaction(async (trx) => {
           console.log('validTaskvalidTask', validTask, labels)
           const insertedTask = await app.objection.models.task.query(trx)
-            .insertGraph(_.omit(validTask, 'labels'), { relate: ['labels'] });
+            .insertGraph({ ...validTask, labels }, { relate: ['labels'] });
           return insertedTask;
         });
 
@@ -129,7 +129,7 @@ export default (app) => {
 
       const { id } = req.params;
       try {
-        const task = await app.objection.models.task.query().findById(id).withGraphJoined('[status, creator, executor, label]');
+        const task = await app.objection.models.task.query().findById(id).withGraphJoined('[status, creator, executor, labels]');
         console.log('task card', task, 'objects', task.label, 'ids', task.labels)
         reply.render('/tasks/card', { task, id });
       } catch (error) {
@@ -179,7 +179,7 @@ export default (app) => {
               throw Error('Status not found')
           }
 
-          return value.$query().patch(_.omit(validTask, 'labels'))
+          return value.$query().patch(validTask)
       })
 
         req.flash('info', i18next.t('flash.tasks.edit.success'));

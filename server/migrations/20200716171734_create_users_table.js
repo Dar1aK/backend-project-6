@@ -34,6 +34,7 @@ export const up = (knex) => {
       table.timestamp('updated_at').defaultTo(knex.fn.now());
     }),
     knex.schema.createTable('tasks_labels', table => {
+      table.increments('id').primary();
       table.integer('tasks_id').references('tasks.id');
       table.integer('labels_id').references('labels.id');
     })

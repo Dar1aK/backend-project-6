@@ -54,7 +54,7 @@ module.exports = class Task extends unique(BaseModel) {
           to: 'users.id'
         }
       },
-      label: {
+      labels: {
         relation: Model.ManyToManyRelation,
         modelClass: Label,
         join: {
