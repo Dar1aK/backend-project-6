@@ -36,7 +36,7 @@ export default (app) => {
             ...(filters.labels ? { labelsId: filters.labels } : {}),
             ...(filters.isCreatorUser === 'on' ? { creatorId: currentUserId } : {}),
           });
-        }
+        };
 
         const tasks = await app.objection.models.task
           .query()
