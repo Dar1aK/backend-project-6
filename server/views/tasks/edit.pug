@@ -13,8 +13,8 @@ block content
     +select(task, 'statusId', ['name'], t('views.tasks.form.statusId'), statuses, error)
     +select(task, 'executorId', ['firstName', 'lastName'], t('views.tasks.form.executorId'), users, error)
     .mb-3
-      label(for="data_label")= t('views.tasks.form.labels')
-      select.form-control#data_label(name="data[labels]" multiple="multiple")
+      label(for="data_labels")= t('views.tasks.form.labels')
+      select.form-control#data_labels(name="data[labels]" multiple="multiple")
         each lab in labels
           option(value=lab.id, selected=(task.labels && task.labels.find(({ id }) => id === lab.id) ? 'selected' : false))= lab.name
     +submit(task)(value=t('views.tasks.buttons.edit'))
