@@ -82,11 +82,11 @@ export default (app) => {
         const validUser = await app.objection.models.user.fromJson(req.body.data);
         await app.objection.models.user.query().where('id', id).first().then(value => {
           if(!value) {
-              throw Error('User not found')
+            throw Error('User not found')
           }
 
           return value.$query().patch(validUser)
-      })
+        })
 
         req.flash('info', i18next.t('flash.users.edit.success'));
         reply.redirect(app.reverse('users'));

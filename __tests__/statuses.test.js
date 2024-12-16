@@ -29,26 +29,26 @@ describe('test statuses CRUD', () => {
   });
 
   beforeEach(async () => {
-      const response = await app.inject({
-        method: 'GET',
-        url: app.reverse('newSession'),
-      });
+    const response = await app.inject({
+      method: 'GET',
+      url: app.reverse('newSession'),
+    });
 
-      expect(response.statusCode).toBe(200);
+    expect(response.statusCode).toBe(200);
 
-      const responseSignIn = await app.inject({
-        method: 'POST',
-        url: app.reverse('session'),
-        payload: {
-          data: testData.users.existing,
-        },
-      });
+    const responseSignIn = await app.inject({
+      method: 'POST',
+      url: app.reverse('session'),
+      payload: {
+        data: testData.users.existing,
+      },
+    });
 
-      expect(responseSignIn.statusCode).toBe(302);
-      //auth
-      const [sessionCookie] = responseSignIn.cookies;
-      const { name, value } = sessionCookie;
-      cookie = { [name]: value };
+    expect(responseSignIn.statusCode).toBe(302);
+    //auth
+    const [sessionCookie] = responseSignIn.cookies;
+    const { name, value } = sessionCookie;
+    cookie = { [name]: value };
   });
 
 

@@ -142,12 +142,12 @@ export default (app) => {
       const { id } = req.params;
 
       try {
-      const task = await app.objection.models.task.query().findById(id);
-      if (task.creatorId != currentUserId) {
-        req.flash('error', i18next.t('flash.tasks.delete.error'));
-        reply.redirect(app.reverse('tasks'));
-        return reply;
-      }
+        const task = await app.objection.models.task.query().findById(id);
+        if (task.creatorId != currentUserId) {
+          req.flash('error', i18next.t('flash.tasks.delete.error'));
+          reply.redirect(app.reverse('tasks'));
+          return reply;
+        }
 
         await app.objection.models.task.query().deleteById(id);
         req.flash('info', i18next.t('flash.tasks.delete.success'));
@@ -178,7 +178,7 @@ export default (app) => {
 
         await app.objection.models.task.query().where('id', id).first().then(value => {
           if(!value) {
-              throw Error('Status not found')
+            throw Error('Status not found')
           }
 
           return value.$query().patch(validTask)

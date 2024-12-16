@@ -66,11 +66,11 @@ export default (app) => {
         const validLabel = await app.objection.models.label.fromJson(req.body.data);
         await app.objection.models.label.query().where('id', id).first().then(value => {
           if(!value) {
-              throw Error('Label not found')
+            throw Error('Label not found')
           }
 
           return value.$query().patch(validLabel)
-      })
+        })
         req.flash('success', i18next.t('flash.labels.edit.success'));
         reply.redirect(app.reverse('labels'));
       } catch (error) {

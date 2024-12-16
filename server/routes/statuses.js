@@ -99,11 +99,11 @@ export default (app) => {
         const validStatus = await app.objection.models.taskStatus.fromJson(req.body.data);
         await app.objection.models.taskStatus.query().where('id', id).first().then(value => {
           if(!value) {
-              throw Error('Status not found')
+            throw Error('Status not found')
           }
 
           return value.$query().patch(validStatus)
-      })
+        })
 
         req.flash('info', i18next.t('flash.statuses.edit.success'));
         reply.redirect(app.reverse('statuses'));
