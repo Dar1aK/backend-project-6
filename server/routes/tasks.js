@@ -1,6 +1,6 @@
 import i18next from 'i18next';
+import _ from 'lodash';
 import { rollbarError } from '../helpers/rollbar.js'
-
 
 export default (app) => {
   const checkAuth = (req, reply) => {
@@ -84,7 +84,7 @@ export default (app) => {
         const insertedTask = await app.objection.models.task.transaction(async (trx) => {
           console.log('validTaskvalidTask', validTask, labels)
           const insertedTask = await app.objection.models.task.query(trx)
-            .insertGraph({...validTask, labels}, { relate: ['labels'] });
+            .insertGraph(_.omit(validTask, 'labels'), { relate: ['labels'] });
           return insertedTask;
         });
 
@@ -130,7 +130,7 @@ export default (app) => {
       const { id } = req.params;
       try {
         const task = await app.objection.models.task.query().findById(id).withGraphJoined('[status, creator, executor, label]');
-        console.log('task card', task, 'objects', task.label, 'ids',task.labels)
+        console.log('task card', task, 'objects', task.label, 'ids', task.labels)
         reply.render('/tasks/card', { task, id });
       } catch (error) {
         rollbarError('GET task card error', error);
@@ -179,7 +179,7 @@ export default (app) => {
               throw Error('Status not found')
           }
 
-          return value.$query().patch(validTask)
+          return value.$query().patch(_.omit(validTask, 'labels'))
       })
 
         req.flash('info', i18next.t('flash.tasks.edit.success'));
