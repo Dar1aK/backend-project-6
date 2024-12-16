@@ -47,7 +47,8 @@ const setUpViews = (app) => {
 
   app.decorateReply('render', function render(viewPath, locals) {
     this.view(viewPath, {
-      ...locals, reply: this,
+      ...locals,
+      reply: this,
     });
   });
 };
